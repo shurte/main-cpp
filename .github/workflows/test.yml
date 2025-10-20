@@ -1,0 +1,16 @@
+name: Main Challenge Test
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: prepare
+      run: |
+        dir
+        cmake -S . -B build
+        cmake --build build
