@@ -1,15 +1,4 @@
-#include <iostream>
-
-class Hello {
-    public:
-        Hello() {
-            std::cout << "Hello" << '\n';
-        }
-
-        ~Hello() {
-            std::cout << "Bye" << '\n';
-        }
-};
+#include <hello.hpp>
 
 int main(int argc, char** argv) {
     Hello hello;
