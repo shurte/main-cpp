@@ -14,4 +14,4 @@ jobs:
         dir
         cmake -S . -B build
         cmake --build build
-        build\\main.exe
+        ./build/main.exe
