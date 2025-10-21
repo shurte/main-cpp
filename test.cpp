@@ -4,5 +4,5 @@
 
 TEST_CASE() {
     Hello hello;
-    REQUIRE(&hello != nullptr);
+    REQUIRE(&hello == nullptr);
 }
