@@ -2,6 +2,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-int main() {
-    return 0;
+TEST_CASE() {
+    Hello hello;
+    REQUIRE(&hello != nullptr);
 }
