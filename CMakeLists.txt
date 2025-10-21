@@ -14,4 +14,5 @@ target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
 
 add_executable(test test.cpp)
 target_link_libraries(test hello)
+target_link_libraries(test Catch2WithMain)
 target_include_directories(test PUBLIC ${CMAKE_SOURCE_DIR}/hello/)

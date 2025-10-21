@@ -9,9 +9,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: prepare
+    - name: compile & test
       run: |
         dir
         cmake -S . -B build
         cmake --build build
-        ./build/Debug/main.exe
+        ./build/Debug/test.exe
