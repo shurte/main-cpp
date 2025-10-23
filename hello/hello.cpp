@@ -9,3 +9,7 @@ Hello::Hello() {
 Hello::~Hello() {
     std::cout << "Bye" << '\n';
 }
+
+void Hello::write() {
+    std::cout << "Info" << '\n';
+}
