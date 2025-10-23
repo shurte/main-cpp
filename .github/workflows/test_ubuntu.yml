@@ -12,6 +12,6 @@ jobs:
     - name: compile & test
       run: |
         dir
-        cmake -S . -B build
+        cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug
         cmake --build build
         ./build/test

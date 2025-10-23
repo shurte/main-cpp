@@ -16,3 +16,17 @@ add_executable(test test.cpp)
 target_link_libraries(test hello)
 target_link_libraries(test Catch2WithMain)
 target_include_directories(test PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
+
+message("Build type: ${CMAKE_BUILD_TYPE}")
+
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    message("Debug build type: ${CMAKE_BUILD_TYPE}.")
+elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+    message("Release build type: ${CMAKE_BUILD_TYPE}.")
+else ()
+    message("Build type is not defined.")
+endif()
+
+add_custom_target( FinalMessage ALL
+    ${CMAKE_COMMAND} -E cmake_echo_color --cyan
+    COMMENT "Final Message ${CMAKE_BUILD_TYPE}" )
