@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.31)
 project(Hello)
 
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    message("Compiler on Windows: ${CMAKE_CXX_COMPILER_ID}")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    message("Compiler on MacOS: ${CMAKE_CXX_COMPILER_ID}")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    message("Compiler on Unix: ${CMAKE_CXX_COMPILER_ID}")
+endif()
+
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(CPM)
 
