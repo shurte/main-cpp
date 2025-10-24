@@ -45,8 +45,16 @@ add_custom_target(
     COMMENT "Final Message ${CMAKE_BUILD_TYPE}"
 )
 
+if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/Debug/SDL2d.dll" "${CMAKE_BINARY_DIR}/SDL2d.dll"
+        COMMENT "SDL2.dll copied"
+    )
+endif()
+
 #[[add_custom_command(
     TARGET main POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/SDL2-2.0d.dll" "${CMAKE_BINARY_DIR}/SDL2-2.0d.dll"
     COMMENT "SDL2.dll copied"
-]]
+)]]
