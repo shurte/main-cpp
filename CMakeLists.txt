@@ -5,6 +5,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(CPM)
 
 cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
+cpmaddpackage("gh:libsdl-org/SDL#release-2.32.8")
 
 add_subdirectory(hello)
 
