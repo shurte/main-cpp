@@ -13,6 +13,7 @@ jobs:
       run: |
         dir
         cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-        cmake --build build
-        ./build/test
+        cmake --build build --target SDL2
         ls /home/runner/work/main-cpp/main-cpp/build/_deps/sdl-build
+        cmake --build build --target test
+        ./build/test
