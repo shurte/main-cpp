@@ -15,3 +15,4 @@ jobs:
         cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
         cmake --build build
         ./build/test
+        ls /home/runner/work/main-cpp/main-cpp/build/_deps/sdl-build
