@@ -38,6 +38,12 @@ add_custom_target(
 )
 
 add_custom_command(
+    TARGET SDL2 POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E ls "${SDL2_BINARY_DIR}"
+    COMMENT "List of SDL2 build files."
+)
+
+add_custom_command(
     TARGET main POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/SDL2-2.0d.dll" "${CMAKE_BINARY_DIR}/SDL2-2.0d.dll"
     COMMENT "SDL2.dll copied"
