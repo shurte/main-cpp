@@ -17,3 +17,5 @@ jobs:
         ls /home/runner/work/main-cpp/main-cpp/build/_deps/sdl-build
         cmake --build build --target test
         ./build/test
+        cmake --build build --target main
+        ./build/main
