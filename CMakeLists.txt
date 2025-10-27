@@ -24,7 +24,7 @@ target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
 
 target_link_libraries(main SDL2)
 target_link_libraries(main libglew_shared)
-target_link_libraries(main opengl32)
+#target_link_libraries(main opengl32)
 
 add_executable(test test.cpp)
 target_link_libraries(test hello)
