@@ -2,7 +2,7 @@ name: Windows Test
 
 on:
   push:
-    branches: [ blablabla ]
+    branches: [ main ]
 
 jobs:
   build:
