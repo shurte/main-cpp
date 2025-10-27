@@ -66,6 +66,11 @@ if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
         TARGET main POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/SDL2d.dll" "${CMAKE_BINARY_DIR}/SDL2d.dll"
         COMMENT "SDL2.dll copied"
+    )
+    add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}/bin/libglew-sharedd.dll" "${CMAKE_BINARY_DIR}/libglew-sharedd.dll"
+        COMMENT "SDL2.dll copied"
     ) 
 endif()
 
