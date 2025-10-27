@@ -14,6 +14,7 @@ include(CPM)
 
 cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
 cpmaddpackage("gh:libsdl-org/SDL#release-2.32.8")
+cpmaddpackage("gh:Perlmint/glew-cmake#origin/master")
 
 add_subdirectory(hello)
 
@@ -22,6 +23,8 @@ target_link_libraries(main hello)
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
 
 target_link_libraries(main SDL2)
+target_link_libraries(main libglew_shared)
+target_link_libraries(main opengl32)
 
 add_executable(test test.cpp)
 target_link_libraries(test hello)
@@ -51,6 +54,19 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
         COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}\\Debug\\SDL2d.dll" "${CMAKE_BINARY_DIR}\\Debug\\SDL2d.dll"
         COMMENT "SDL2d.dll copied"
     )
+    add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}\\Debug\\libglew-sharedd.dll" "${CMAKE_BINARY_DIR}\\Debug\\libglew-sharedd.dll"
+        COMMENT "SDL2d.dll copied"
+    )
+endif()
+
+if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
+    add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/SDL2d.dll" "${CMAKE_BINARY_DIR}/SDL2d.dll"
+        COMMENT "SDL2.dll copied"
+    ) 
 endif()
 
 #[[add_custom_command(
