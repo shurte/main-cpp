@@ -56,7 +56,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     )
     add_custom_command(
         TARGET main POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}\\Debug\\libglew-sharedd.dll" "${CMAKE_BINARY_DIR}\\Debug\\libglew-sharedd.dll"
+        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}\\Debug\\glew-sharedd.dll" "${CMAKE_BINARY_DIR}\\Debug\\glew-sharedd.dll"
         COMMENT "SDL2d.dll copied"
     )
 endif()
