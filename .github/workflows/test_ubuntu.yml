@@ -22,4 +22,3 @@ jobs:
         cmake --build build --target test
         ./build/test
         cmake --build build --target main
-        ./build/main

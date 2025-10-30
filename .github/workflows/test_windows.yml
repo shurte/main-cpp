@@ -17,4 +17,3 @@ jobs:
         cmake --build build --target test
         ./build/Debug/test.exe
         cmake --build build --target main
-        ./build/Debug/main.exe

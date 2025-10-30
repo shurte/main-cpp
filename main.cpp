@@ -23,6 +23,24 @@ int main(int argc, char** argv) {
     glewInit();
     SDL_GL_MakeCurrent(window, context);
 
+    SDL_Event event;
+    bool isRunning = true;
+
+    while (isRunning) {
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT:
+                    isRunning = false;
+                    break;
+            }
+
+            glClearColor(0.0f, 0.67f, 0.67f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            SDL_GL_SwapWindow(window);
+        }
+    }
+
     if (window != nullptr) {
         SDL_DestroyWindow(window);
     }
