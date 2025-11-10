@@ -8,6 +8,9 @@
 #include <string>
 #ifdef _WIN32
 #include <wtypes.h>
+#else
+#include <limits.h>
+#include <unistd.h>     //readlink
 #endif
 
 std::string getAppDirectory() {
@@ -17,6 +20,9 @@ std::string getAppDirectory() {
     std::string directory(fileName);
     int lastSlash = directory.find_last_of('\\');
     directory = directory.substr(0, lastSlash);
+    #else
+    ssize_t count = readlink("/proc/self/exe", fileName, 1024);
+    std::string directory(fileName, (count > 0) ? count : 0);
     #endif
     return directory;
 }
