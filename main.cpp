@@ -5,34 +5,12 @@
 
 #include <GL/glew.h>
 
-#include <string>
-#ifdef _WIN32
-#include <wtypes.h>
-#else
-#include <limits.h>
-#include <unistd.h>     //readlink
-#endif
-
-std::string getAppDirectory() {
-    char* fileName = new char[1024];
-    #ifdef _WIN32
-    GetModuleFileName(nullptr, fileName, 1024);
-    std::string directory(fileName);
-    int lastSlash = directory.find_last_of('\\');
-    directory = directory.substr(0, lastSlash);
-    #else
-    ssize_t count = readlink("/proc/self/exe", fileName, 1024);
-    std::string directory(fileName, (count > 0) ? count : 0);
-    #endif
-    return directory;
-}
-
 int main(int argc, char** argv) {
     Hello hello;
 
-    std::string directory = getAppDirectory();
-    std::cout << directory.c_str() << '\n';
-
+    std::string directory = hello::getAppDirectory();
+    hello.write(directory);
+    
     SDL_Init(SDL_INIT_EVERYTHING);
 
     SDL_Window* window = SDL_CreateWindow(
