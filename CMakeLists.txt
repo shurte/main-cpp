@@ -13,20 +13,17 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(CPM)
 
 cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
-cpmaddpackage("gh:libsdl-org/SDL#release-2.32.8")
-cpmaddpackage("gh:Perlmint/glew-cmake#origin/master")
 
 add_subdirectory(hello)
+add_subdirectory(ui)
 
-add_executable(main main.cpp)
+add_executable(main Main.cpp)
 target_link_libraries(main hello)
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
+target_link_libraries(main ui)
+target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/ui/)
 
-target_link_libraries(main SDL2)
-target_link_libraries(main libglew_shared)
-#target_link_libraries(main opengl32)
-
-add_executable(test test.cpp)
+add_executable(test Test.cpp)
 target_link_libraries(test hello)
 target_include_directories(test PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
 
@@ -73,9 +70,3 @@ if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
         COMMENT "SDL2.dll copied"
     ) 
 endif()
-
-#[[add_custom_command(
-    TARGET main POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/SDL2-2.0d.dll" "${CMAKE_BINARY_DIR}/SDL2-2.0d.dll"
-    COMMENT "SDL2.dll copied"
-)]]
