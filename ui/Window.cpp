@@ -25,7 +25,40 @@ Window::~Window() {
     SDL_Quit();
 }
 
+static unsigned int VAO[1];
+static unsigned int VBO[1];
+
+static float rectangle[] = {
+    -0.5f, 0.5f, 0.0f,
+    -0.5f, -0.5f, 0.0f,
+    0.5f, -0.5f, 0.0f,
+    0.5f, 0.5f, 0.0f,
+};
+
+void initObjects() {
+    glGenVertexArrays(1, VAO);
+    glGenBuffers(1, VBO);
+
+    glBindVertexArray(VAO[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
+    glEnableVertexAttribArray(0);
+    glBindVertexArray(0);
+}
+
+void drawObjects() {
+    glBindVertexArray(VAO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle), rectangle, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
+    glEnableVertexAttribArray(0);
+    glDrawArrays(GL_POLYGON, 0, 4);
+    glBindVertexArray(0);
+}
+
 void Window::update() {
+    initObjects();
+
     SDL_Event event;
     bool isRunning = true;
 
@@ -39,6 +72,8 @@ void Window::update() {
 
             glClearColor(0.0f, 0.67f, 0.67f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            drawObjects();
 
             SDL_GL_SwapWindow(window);
         }
