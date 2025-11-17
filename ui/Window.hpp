@@ -5,6 +5,10 @@
 
 #include <GL/glew.h>
 
+#include <vector>
+
+struct GeometricObject;
+
 class Window {
     public:
         Window();
@@ -13,5 +17,11 @@ class Window {
         void update();
 
     private:
+        void initObjects();
+        void drawObjects();
+        void drawObject(const GeometricObject& geometricObject);
+
+    private:
         SDL_Window* window = nullptr;
+        std::vector<GeometricObject> geometricObjects;
 };

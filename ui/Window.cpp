@@ -1,7 +1,5 @@
 #include <Window.hpp>
 
-#include <vector>
-
 Window::Window() {
     SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -57,7 +55,7 @@ struct GeometricObject {
 };
 
 
-void initObjects() {
+void Window::initObjects() {
     glGenVertexArrays(1, VAO);
     glGenBuffers(1, VBO);
 
@@ -67,10 +65,6 @@ void initObjects() {
     // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
     // glEnableVertexAttribArray(0);
     // glBindVertexArray(0);
-}
-
-void drawObjects() {
-    std::vector<GeometricObject> geometricObjects;
 
     GeometricObject objectOne;
     objectOne.data = rectangle;
@@ -92,15 +86,21 @@ void drawObjects() {
     objectThree.vertexSize = 3;
 
     geometricObjects.push_back(objectThree);
+}
 
+void Window::drawObjects() {
     for (const GeometricObject& geometricObject : geometricObjects) {
-        glBindVertexArray(VAO[0]);
-        glBufferData(GL_ARRAY_BUFFER, geometricObject.size, geometricObject.data, GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
-        glEnableVertexAttribArray(0);
-        glDrawArrays(GL_POLYGON, 0, geometricObject.vertexSize);
-        glBindVertexArray(0);
+        drawObject(geometricObject);
     }
+}
+
+void Window::drawObject(const GeometricObject& geometricObject) {
+    glBindVertexArray(VAO[0]);
+    glBufferData(GL_ARRAY_BUFFER, geometricObject.size, geometricObject.data, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
+    glEnableVertexAttribArray(0);
+    glDrawArrays(GL_POLYGON, 0, geometricObject.vertexSize);
+    glBindVertexArray(0);
 }
 
 void Window::update() {
