@@ -18,6 +18,7 @@ add_subdirectory(hello)
 add_subdirectory(ui)
 
 add_executable(main Main.cpp)
+target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/)
 target_link_libraries(main hello)
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
 target_link_libraries(main ui)

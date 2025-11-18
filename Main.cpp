@@ -1,19 +1,5 @@
 #include <Hello.hpp>
-#include <Window.hpp>
-
-class Controller {
-    public:
-        Controller() {
-
-        }
-
-        void run() {
-            window.update();        
-        }
-    
-    private:
-        Window window;
-};
+#include <Controller.hpp>
 
 int main(int argc, char** argv) {
     Hello hello;

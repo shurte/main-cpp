@@ -48,23 +48,12 @@ static float triangle[] = {
     0.75f, -0.75f, 0.0f
 };
 
-struct GeometricObject {
-    float* data;
-    unsigned int size;
-    unsigned int vertexSize;
-};
-
-
 void Window::initObjects() {
     glGenVertexArrays(1, VAO);
     glGenBuffers(1, VBO);
 
     glBindVertexArray(VAO[0]);
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
-    // glEnableVertexAttribArray(0);
-    // glBindVertexArray(0);
 
     GeometricObject objectOne;
     objectOne.data = rectangle;
@@ -124,5 +113,11 @@ void Window::update() {
 
             SDL_GL_SwapWindow(window);
         }
+    }
+}
+
+void Window::setGeometricObjects(const std::vector<GeometricObject>& geometricObjects) {
+    for (GeometricObject geometricObject : geometricObjects) {
+        this->geometricObjects.push_back(geometricObject);
     }
 }
