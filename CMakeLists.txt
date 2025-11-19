@@ -65,14 +65,16 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(DLL_PREFIX "")
 endif()
 
-add_custom_command(
-    TARGET main POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/${BETWEEN_BUILD_FOLDER}SDL2${DEBUG_INDEX}.dll" "${CMAKE_BINARY_DIR}/${BETWEEN_BUILD_FOLDER}SDL2${DEBUG_INDEX}.dll"
-    COMMENT "SDL2${DEBUG_INDEX}.dll copied"
-)
-add_custom_command(
-    TARGET main POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}/bin/${BETWEEN_BUILD_FOLDER}${DLL_PREFIX}glew-shared${DEBUG_INDEX}.dll" 
-        "${CMAKE_BINARY_DIR}/${BETWEEN_BUILD_FOLDER}${DLL_PREFIX}glew-shared${DEBUG_INDEX}.dll"
-    COMMENT "SDL2${DEBUG_INDEX}.dll copied"
-)
+if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC" OR CMAKE_GENERATOR MATCHES "MinGW Makefiles")
+    add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/${BETWEEN_BUILD_FOLDER}SDL2${DEBUG_INDEX}.dll" "${CMAKE_BINARY_DIR}/${BETWEEN_BUILD_FOLDER}SDL2${DEBUG_INDEX}.dll"
+        COMMENT "SDL2${DEBUG_INDEX}.dll copied"
+    )
+    add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}/bin/${BETWEEN_BUILD_FOLDER}${DLL_PREFIX}glew-shared${DEBUG_INDEX}.dll" 
+            "${CMAKE_BINARY_DIR}/${BETWEEN_BUILD_FOLDER}${DLL_PREFIX}glew-shared${DEBUG_INDEX}.dll"
+        COMMENT "SDL2${DEBUG_INDEX}.dll copied"
+    )
+endif()
