@@ -48,12 +48,8 @@ static float triangle[] = {
     0.75f, -0.75f, 0.0f
 };
 
-void Window::initObjects() {
-    glGenVertexArrays(1, VAO);
-    glGenBuffers(1, VBO);
-
-    glBindVertexArray(VAO[0]);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+std::vector<GeometricObject> getGeometricObjects() {
+    std::vector<GeometricObject> geometricObjects;
 
     GeometricObject objectOne;
     objectOne.data = rectangle;
@@ -75,6 +71,18 @@ void Window::initObjects() {
     objectThree.vertexSize = 3;
 
     geometricObjects.push_back(objectThree);
+
+    return geometricObjects;
+}
+
+void Window::initObjects() {
+    glGenVertexArrays(1, VAO);
+    glGenBuffers(1, VBO);
+
+    glBindVertexArray(VAO[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+
+    setGeometricObjects(getGeometricObjects());
 }
 
 void Window::drawObjects() {

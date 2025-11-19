@@ -34,10 +34,13 @@ message("Build type: ${CMAKE_BUILD_TYPE}")
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Debug build type: ${CMAKE_BUILD_TYPE}.")
+    set(DEBUG_INDEX "d")
 elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     message("Release build type: ${CMAKE_BUILD_TYPE}.")
+    set(DEBUG_INDEX "")
 else ()
     message("Build type is not defined.")
+    set(DEBUG_INDEX "d")
 endif()
 
 add_custom_target(
@@ -49,25 +52,25 @@ add_custom_target(
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     add_custom_command(
         TARGET main POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}\\Debug\\SDL2d.dll" "${CMAKE_BINARY_DIR}\\Debug\\SDL2d.dll"
-        COMMENT "SDL2d.dll copied"
+        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/Debug/SDL2${DEBUG_INDEX}.dll" "${CMAKE_BINARY_DIR}/Debug/SDL2${DEBUG_INDEX}.dll"
+        COMMENT "SDL2${DEBUG_INDEX}.dll copied"
     )
     add_custom_command(
         TARGET main POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}\\bin\\Debug\\glew-sharedd.dll" "${CMAKE_BINARY_DIR}\\Debug\\glew-sharedd.dll"
-        COMMENT "SDL2d.dll copied"
+        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}/bin/Debug/glew-shared${DEBUG_INDEX}.dll" "${CMAKE_BINARY_DIR}/Debug/glew-shared${DEBUG_INDEX}.dll"
+        COMMENT "SDL2${DEBUG_INDEX}.dll copied"
     )
 endif()
 
 if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
     add_custom_command(
         TARGET main POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/SDL2d.dll" "${CMAKE_BINARY_DIR}/SDL2d.dll"
-        COMMENT "SDL2.dll copied"
+        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_BINARY_DIR}/SDL2${DEBUG_INDEX}.dll" "${CMAKE_BINARY_DIR}/SDL2${DEBUG_INDEX}.dll"
+        COMMENT "SDL2${DEBUG_INDEX}.dll copied"
     )
     add_custom_command(
         TARGET main POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}/bin/libglew-sharedd.dll" "${CMAKE_BINARY_DIR}/libglew-sharedd.dll"
-        COMMENT "SDL2.dll copied"
+        COMMAND ${CMAKE_COMMAND} -E copy "${glew_BINARY_DIR}/bin/libglew-shared${DEBUG_INDEX}.dll" "${CMAKE_BINARY_DIR}/libglew-shared${DEBUG_INDEX}.dll"
+        COMMENT "SDL2${DEBUG_INDEX}.dll copied"
     ) 
 endif()
