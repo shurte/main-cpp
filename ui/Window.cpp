@@ -28,61 +28,12 @@ Window::~Window() {
 static unsigned int VAO[1];
 static unsigned int VBO[1];
 
-static float rectangle[] = {
-    -0.25f, 0.75f, 0.0f,
-    -0.25f, 0.25f, 0.0f,
-    -0.75f, 0.25f, 0.0f,
-    -0.75f, 0.75f, 0.0f,
-};
-
-static float rectangleTwo[] = {
-    0.25f, 0.75f, 0.0f,
-    0.25f, 0.25f, 0.0f,
-    0.75f, 0.25f, 0.0f,
-    0.75f, 0.75f, 0.0f,
-};
-
-static float triangle[] = {
-    0.5f, -0.25f, 0.0f,
-    0.25f, -0.75f, 0.0f,
-    0.75f, -0.75f, 0.0f
-};
-
-std::vector<GeometricObject> getGeometricObjects() {
-    std::vector<GeometricObject> geometricObjects;
-
-    GeometricObject objectOne;
-    objectOne.data = rectangle;
-    objectOne.size = sizeof(rectangle);
-    objectOne.vertexSize = 4;
-
-    geometricObjects.push_back(objectOne);
-
-    GeometricObject objectTwo;
-    objectTwo.data = rectangleTwo;
-    objectTwo.size = sizeof(rectangleTwo);
-    objectTwo.vertexSize = 4;
-
-    geometricObjects.push_back(objectTwo);
-
-    GeometricObject objectThree;
-    objectThree.data = triangle;
-    objectThree.size = sizeof(triangle);
-    objectThree.vertexSize = 3;
-
-    geometricObjects.push_back(objectThree);
-
-    return geometricObjects;
-}
-
 void Window::initObjects() {
     glGenVertexArrays(1, VAO);
     glGenBuffers(1, VBO);
 
     glBindVertexArray(VAO[0]);
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-
-    setGeometricObjects(getGeometricObjects());
 }
 
 void Window::drawObjects() {

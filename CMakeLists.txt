@@ -16,19 +16,16 @@ cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
 
 add_subdirectory(hello)
 add_subdirectory(ui)
+add_subdirectory(test)
 
-add_executable(main Main.cpp)
+file(GLOB SOURCES *.cpp)
+
+add_executable(main ${SOURCES})
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/)
 target_link_libraries(main hello)
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
 target_link_libraries(main ui)
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/ui/)
-
-add_executable(test Test.cpp)
-target_link_libraries(test hello)
-target_include_directories(test PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
-
-target_link_libraries(test Catch2WithMain)
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
 

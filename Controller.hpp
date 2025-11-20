@@ -1,6 +1,9 @@
 #pragma once
 
+#include <GeometricObject.hpp>
 #include <Window.hpp>
+
+#include <vector>
 
 class Controller {
     public:
@@ -9,9 +12,13 @@ class Controller {
         }
 
         void run() {
-            window.update();        
+            window.setGeometricObjects(getGeometricObjects());
+            window.update();
         }
-    
+        
+    private:
+        std::vector<GeometricObject> getGeometricObjects();
+
     private:
         Window window;
 };
