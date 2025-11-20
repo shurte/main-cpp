@@ -15,5 +15,5 @@ jobs:
         cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
         cmake --build build --target SDL2
         cmake --build build --target test
-        ./build/Debug/test.exe
+        ./build/test/Debug/test.exe
         cmake --build build --target main

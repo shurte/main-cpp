@@ -20,5 +20,5 @@ jobs:
         cmake --build build --target SDL2
         ls /home/runner/work/main-cpp/main-cpp/build/_deps/sdl-build
         cmake --build build --target test
-        ./build/test
+        ./build/test/test
         cmake --build build --target main
