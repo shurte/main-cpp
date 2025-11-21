@@ -51,6 +51,42 @@ void Window::drawObject(const GeometricObject& geometricObject) {
     glBindVertexArray(0);
 }
 
+#define WINDOW_MOUSE_DOWN 1
+#define WINDOW_MOUSE_UP 2
+#define WINDOW_MOVE_UP 3
+#define WINDOW_MOVE_DOWN 4
+#define WINDOW_MOVE_RIGHT 5
+#define WINDOW_MOVE_LEFT 6
+#define WINDOW_EXIT 128
+
+size_t getKeyEvent(const SDL_Event& event) {
+    switch (event.key.keysym.sym) {
+        case SDLK_w:
+            return WINDOW_MOVE_UP;
+        case SDLK_s:
+            return WINDOW_MOVE_DOWN;
+        case SDLK_a:
+            return WINDOW_MOVE_LEFT;
+        case SDLK_d:
+            return WINDOW_MOVE_RIGHT;
+    }
+    return 0;
+}
+
+size_t getWindowEvent(const SDL_Event& event) {
+    switch (event.type) {
+        case SDL_QUIT:
+            return WINDOW_EXIT;
+        case SDL_MOUSEBUTTONDOWN:
+            return WINDOW_MOUSE_DOWN;
+        case SDL_MOUSEBUTTONUP:
+            return WINDOW_MOUSE_UP;
+        case SDL_KEYDOWN:
+            return getKeyEvent(event);
+    }
+    return 0;
+}
+
 void Window::update() {
     initObjects();
 
@@ -59,8 +95,10 @@ void Window::update() {
 
     while (isRunning) {
         while (SDL_PollEvent(&event)) {
-            switch (event.type) {
-                case SDL_QUIT:
+            size_t windowEvent = getWindowEvent(event);
+
+            switch (windowEvent) {
+                case WINDOW_EXIT:
                     isRunning = false;
                     break;
             }

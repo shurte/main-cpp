@@ -12,10 +12,16 @@ class Controller {
         }
 
         void run() {
-            window.setGeometricObjects(getGeometricObjects());
-            window.update();
+            init();
+            runLoop();
+            finish();
         }
         
+    private:
+        void init();
+        void runLoop();
+        void finish();
+
     private:
         std::vector<GeometricObject> getGeometricObjects();
 

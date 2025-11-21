@@ -46,3 +46,15 @@ std::vector<GeometricObject> Controller::getGeometricObjects() {
 
     return geometricObjects;
 }
+
+void Controller::init() {
+    window.setGeometricObjects(getGeometricObjects());
+}
+
+void Controller::runLoop() {
+    window.update();
+}
+
+void Controller::finish() {
+
+}
