@@ -95,9 +95,9 @@ void Window::update() {
 
     while (isRunning) {
         while (SDL_PollEvent(&event)) {
-            size_t windowEvent = getWindowEvent(event);
+            currentEvent = getWindowEvent(event);
 
-            switch (windowEvent) {
+            switch (currentEvent) {
                 case WINDOW_EXIT:
                     isRunning = false;
                     break;
@@ -117,4 +117,8 @@ void Window::setGeometricObjects(const std::vector<GeometricObject>& geometricOb
     for (GeometricObject geometricObject : geometricObjects) {
         this->geometricObjects.push_back(geometricObject);
     }
+}
+
+size_t Window::getCurrentEvent() {
+    return currentEvent;
 }

@@ -16,6 +16,7 @@ class Window {
 
         void update();
         void setGeometricObjects(const std::vector<GeometricObject>& geometricObjects);
+        size_t getCurrentEvent();
 
     private:
         void initObjects();
@@ -25,4 +26,5 @@ class Window {
     private:
         SDL_Window* window = nullptr;
         std::vector<GeometricObject> geometricObjects;
+        size_t currentEvent = 0;
 };
