@@ -48,11 +48,22 @@ std::vector<GeometricObject> Controller::getGeometricObjects() {
 }
 
 void Controller::init() {
+    window.initObjects();
     window.setGeometricObjects(getGeometricObjects());
 }
 
 void Controller::runLoop() {
-    window.update();
+    bool isRunning = true;
+
+    while (isRunning) {
+        window.setGeometricObjects(getGeometricObjects());
+        window.update();
+        size_t event = window.getCurrentEvent();
+
+        if (event == WINDOW_EXIT) {
+            isRunning = false;
+        }
+    }
 }
 
 void Controller::finish() {

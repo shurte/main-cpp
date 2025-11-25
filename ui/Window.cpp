@@ -36,6 +36,15 @@ void Window::initObjects() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 }
 
+void Window::drawScene() {
+    glClearColor(0.0f, 0.67f, 0.67f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    drawObjects();
+
+    SDL_GL_SwapWindow(window);
+}
+
 void Window::drawObjects() {
     for (const GeometricObject& geometricObject : geometricObjects) {
         drawObject(geometricObject);
@@ -50,14 +59,6 @@ void Window::drawObject(const GeometricObject& geometricObject) {
     glDrawArrays(GL_POLYGON, 0, geometricObject.vertexSize);
     glBindVertexArray(0);
 }
-
-#define WINDOW_MOUSE_DOWN 1
-#define WINDOW_MOUSE_UP 2
-#define WINDOW_MOVE_UP 3
-#define WINDOW_MOVE_DOWN 4
-#define WINDOW_MOVE_RIGHT 5
-#define WINDOW_MOVE_LEFT 6
-#define WINDOW_EXIT 128
 
 size_t getKeyEvent(const SDL_Event& event) {
     switch (event.key.keysym.sym) {
@@ -88,32 +89,15 @@ size_t getWindowEvent(const SDL_Event& event) {
 }
 
 void Window::update() {
-    initObjects();
-
     SDL_Event event;
-    bool isRunning = true;
-
-    while (isRunning) {
-        while (SDL_PollEvent(&event)) {
-            currentEvent = getWindowEvent(event);
-
-            switch (currentEvent) {
-                case WINDOW_EXIT:
-                    isRunning = false;
-                    break;
-            }
-
-            glClearColor(0.0f, 0.67f, 0.67f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            drawObjects();
-
-            SDL_GL_SwapWindow(window);
-        }
+    while (SDL_PollEvent(&event)) {
+        currentEvent = getWindowEvent(event);
+        drawScene();
     }
 }
 
 void Window::setGeometricObjects(const std::vector<GeometricObject>& geometricObjects) {
+    this->geometricObjects.clear();
     for (GeometricObject geometricObject : geometricObjects) {
         this->geometricObjects.push_back(geometricObject);
     }

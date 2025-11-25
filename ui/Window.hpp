@@ -9,17 +9,26 @@
 
 #include <vector>
 
+#define WINDOW_MOUSE_DOWN 1
+#define WINDOW_MOUSE_UP 2
+#define WINDOW_MOVE_UP 3
+#define WINDOW_MOVE_DOWN 4
+#define WINDOW_MOVE_RIGHT 5
+#define WINDOW_MOVE_LEFT 6
+#define WINDOW_EXIT 128
+
 class Window {
     public:
         Window();
         ~Window();
 
+        void initObjects();
         void update();
+        void drawScene();
         void setGeometricObjects(const std::vector<GeometricObject>& geometricObjects);
         size_t getCurrentEvent();
 
     private:
-        void initObjects();
         void drawObjects();
         void drawObject(const GeometricObject& geometricObject);
 
