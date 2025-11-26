@@ -90,16 +90,16 @@ size_t getWindowEvent(const SDL_Event& event) {
 
 void Window::update() {
     SDL_Event event;
+    currentEvent = 0;
     while (SDL_PollEvent(&event)) {
         currentEvent = getWindowEvent(event);
-        drawScene();
     }
 }
 
-void Window::setGeometricObjects(const std::vector<GeometricObject>& geometricObjects) {
-    this->geometricObjects.clear();
-    for (GeometricObject geometricObject : geometricObjects) {
-        this->geometricObjects.push_back(geometricObject);
+void Window::setGeometricObjects(const std::vector<GeometricObject>& newGeometricObjects) {
+    geometricObjects.clear();
+    for (GeometricObject newGeometricObject : newGeometricObjects) {
+        geometricObjects.push_back(newGeometricObject);
     }
 }
 

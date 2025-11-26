@@ -52,17 +52,34 @@ void Controller::init() {
     window.setGeometricObjects(getGeometricObjects());
 }
 
+void moveUp(float *data, size_t size) {
+    for (size_t i = 0; i < size; ++i) {
+        size_t index = i * 3 + 1;
+        int cache = data[index] * 100;
+        int newValue = cache + 10;
+        if (newValue > 100) newValue = rectangleTwo[index] * 100;
+        data[index] = (float) newValue / 100.0f;
+    }
+}
+
 void Controller::runLoop() {
     bool isRunning = true;
 
+    window.setGeometricObjects(getGeometricObjects());
+    window.drawScene();
+
     while (isRunning) {
-        window.setGeometricObjects(getGeometricObjects());
         window.update();
         size_t event = window.getCurrentEvent();
 
         if (event == WINDOW_EXIT) {
             isRunning = false;
+        } else if (event == WINDOW_MOUSE_UP) {
+            moveUp(rectangle, 4);
         }
+
+        window.setGeometricObjects(getGeometricObjects());
+        window.drawScene();
     }
 }
 
