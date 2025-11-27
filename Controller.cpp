@@ -53,11 +53,45 @@ void Controller::init() {
 }
 
 void moveUp(float *data, size_t size) {
+    float topBorder = -1.0f;
+
     for (size_t i = 0; i < size; ++i) {
         size_t index = i * 3 + 1;
-        int cache = data[index] * 100;
-        int newValue = cache + 10;
-        if (newValue > 100) newValue = rectangleTwo[index] * 100;
+        if ((data[index]) > topBorder) {
+            topBorder = data[index];
+        }
+    }
+
+    if ((topBorder + 0.1f) > 1.0f) {
+        return;
+    }
+
+    for (size_t i = 0; i < size; ++i) {
+        size_t index = i * 3 + 1;
+        int cache = round(data[index] * 100);
+        int newValue = cache + 1;
+        data[index] = (float) newValue / 100.0f;
+    }
+}
+
+void moveDown(float *data, size_t size) {
+    float bottomBorder = 1.0f;
+
+    for (size_t i = 0; i < size; ++i) {
+        size_t index = i * 3 + 1;
+        if ((data[index]) < bottomBorder) {
+            bottomBorder = data[index];
+        }
+    }
+
+    if ((bottomBorder - 0.1f) < -1.0f) {
+        return;
+    }
+
+    for (size_t i = 0; i < size; ++i) {
+        size_t index = i * 3 + 1;
+        int cache = round(data[index] * 100);
+        int newValue = cache - 1;
         data[index] = (float) newValue / 100.0f;
     }
 }
@@ -74,8 +108,10 @@ void Controller::runLoop() {
 
         if (event == WINDOW_EXIT) {
             isRunning = false;
-        } else if (event == WINDOW_MOUSE_UP) {
+        } else if (event == WINDOW_MOVE_UP) {
             moveUp(rectangle, 4);
+        } else if (event == WINDOW_MOVE_DOWN) {
+            moveDown(rectangle, 4);
         }
 
         window.setGeometricObjects(getGeometricObjects());

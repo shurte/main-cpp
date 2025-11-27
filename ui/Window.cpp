@@ -92,7 +92,10 @@ void Window::update() {
     SDL_Event event;
     currentEvent = 0;
     while (SDL_PollEvent(&event)) {
-        currentEvent = getWindowEvent(event);
+        size_t returnCode = getWindowEvent(event);
+        if (returnCode != 0) {
+            currentEvent = returnCode;
+        }
     }
 }
 
