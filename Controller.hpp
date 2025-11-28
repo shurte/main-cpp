@@ -27,4 +27,5 @@ class Controller {
 
     private:
         Window window;
+        std::vector<GeometricObject> geometricObjects;
 };

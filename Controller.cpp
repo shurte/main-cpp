@@ -48,8 +48,8 @@ std::vector<GeometricObject> Controller::getGeometricObjects() {
 }
 
 void Controller::init() {
-    window.initObjects();
-    window.setGeometricObjects(getGeometricObjects());
+    geometricObjects = getGeometricObjects();
+    window.initGraphicArrayAndBuffer();
 }
 
 void moveUp(float *data, size_t size) {
@@ -72,6 +72,10 @@ void moveUp(float *data, size_t size) {
         int newValue = cache + 1;
         data[index] = (float) newValue / 100.0f;
     }
+}
+
+void moveUpGeometricObject(GeometricObject& geometricObject) {
+    moveUp(geometricObject.data, geometricObject.vertexSize);
 }
 
 void moveDown(float *data, size_t size) {
@@ -99,7 +103,7 @@ void moveDown(float *data, size_t size) {
 void Controller::runLoop() {
     bool isRunning = true;
 
-    window.setGeometricObjects(getGeometricObjects());
+    window.setGeometricObjects(geometricObjects);
     window.drawScene();
 
     while (isRunning) {
@@ -109,12 +113,13 @@ void Controller::runLoop() {
         if (event == WINDOW_EXIT) {
             isRunning = false;
         } else if (event == WINDOW_MOVE_UP) {
-            moveUp(rectangle, 4);
+            moveUpGeometricObject(geometricObjects[0]);
+            // moveUp(rectangle, 4);
         } else if (event == WINDOW_MOVE_DOWN) {
             moveDown(rectangle, 4);
         }
 
-        window.setGeometricObjects(getGeometricObjects());
+        window.setGeometricObjects(geometricObjects);
         window.drawScene();
     }
 }

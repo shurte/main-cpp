@@ -22,7 +22,7 @@ class Window {
         Window();
         ~Window();
 
-        void initObjects();
+        void initGraphicArrayAndBuffer();
         void update();
         void drawScene();
         void setGeometricObjects(const std::vector<GeometricObject>& geometricObjects);

@@ -28,7 +28,7 @@ Window::~Window() {
 static unsigned int VAO[1];
 static unsigned int VBO[1];
 
-void Window::initObjects() {
+void Window::initGraphicArrayAndBuffer() {
     glGenVertexArrays(1, VAO);
     glGenBuffers(1, VBO);
 
