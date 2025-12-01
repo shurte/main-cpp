@@ -19,7 +19,7 @@
 
 class Window {
     public:
-        Window();
+        Window(size_t sizeHorizontal, size_t sizeVertical);
         ~Window();
 
         void initGraphicArrayAndBuffer();

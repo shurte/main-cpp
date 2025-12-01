@@ -1,13 +1,18 @@
 #pragma once
 
+#include <GameObject.hpp>
 #include <GeometricObject.hpp>
 #include <Window.hpp>
 
 #include <vector>
 
+#define WINDOW_SIZE_H 1200
+#define WINDOW_SIZE_V 600
+
 class Controller {
     public:
-        Controller() {
+        Controller() 
+            : window(WINDOW_SIZE_H, WINDOW_SIZE_V) {
 
         }
 
@@ -27,5 +32,6 @@ class Controller {
 
     private:
         Window window;
+        std::vector<GameObject> gameObjects;
         std::vector<GeometricObject> geometricObjects;
 };

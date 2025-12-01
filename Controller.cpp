@@ -25,21 +25,18 @@ std::vector<GeometricObject> Controller::getGeometricObjects() {
 
     GeometricObject objectOne;
     objectOne.data = rectangle;
-    objectOne.size = sizeof(rectangle);
     objectOne.vertexSize = 4;
 
     geometricObjects.push_back(objectOne);
 
     GeometricObject objectTwo;
     objectTwo.data = rectangleTwo;
-    objectTwo.size = sizeof(rectangleTwo);
     objectTwo.vertexSize = 4;
 
     geometricObjects.push_back(objectTwo);
 
     GeometricObject objectThree;
     objectThree.data = triangle;
-    objectThree.size = sizeof(triangle);
     objectThree.vertexSize = 3;
 
     geometricObjects.push_back(objectThree);
@@ -47,7 +44,22 @@ std::vector<GeometricObject> Controller::getGeometricObjects() {
     return geometricObjects;
 }
 
+GeometricObject getGeometricObject(const GameObject& gameObject) {
+    GeometricObject geometricObject;
+    geometricObject.vertexSize = 4;
+
+    return geometricObject;
+}
+
 void Controller::init() {
+    GameObject gameRectangle;
+    gameRectangle.horizontalPosition = 100;
+    gameRectangle.verticalPosition = 100;
+    gameRectangle.horizontalSize = 100;
+    gameRectangle.verticalSize = 100;
+
+    gameObjects.push_back(gameRectangle);
+
     geometricObjects = getGeometricObjects();
     window.initGraphicArrayAndBuffer();
 }

@@ -1,14 +1,14 @@
 #include <Window.hpp>
 
-Window::Window() {
+Window::Window(size_t sizeHorizontal, size_t sizeVertical) {
     SDL_Init(SDL_INIT_EVERYTHING);
 
     window = SDL_CreateWindow(
         "Hello",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        600,
-        600,
+        sizeHorizontal,
+        sizeVertical,
         SDL_WINDOW_OPENGL
     );
 
@@ -53,7 +53,7 @@ void Window::drawObjects() {
 
 void Window::drawObject(const GeometricObject& geometricObject) {
     glBindVertexArray(VAO[0]);
-    glBufferData(GL_ARRAY_BUFFER, geometricObject.size, geometricObject.data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, geometricObject.vertexSize * 3 * sizeof(float), geometricObject.data, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
     glEnableVertexAttribArray(0);
     glDrawArrays(GL_POLYGON, 0, geometricObject.vertexSize);
