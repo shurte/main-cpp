@@ -23,11 +23,11 @@ static float triangle[] = {
 std::vector<GeometricObject> Controller::getGeometricObjects() {
     std::vector<GeometricObject> geometricObjects;
 
-    GeometricObject objectOne;
-    objectOne.data = rectangle;
-    objectOne.vertexSize = 4;
+    // GeometricObject objectOne;
+    // objectOne.data = rectangle;
+    // objectOne.vertexSize = 4;
 
-    geometricObjects.push_back(objectOne);
+    // geometricObjects.push_back(objectOne);
 
     GeometricObject objectTwo;
     objectTwo.data = rectangleTwo;
@@ -47,11 +47,29 @@ std::vector<GeometricObject> Controller::getGeometricObjects() {
 GeometricObject getGeometricObject(const GameObject& gameObject) {
     GeometricObject geometricObject;
     geometricObject.vertexSize = 4;
+    geometricObject.data = new float[4 * 3];
+    geometricObject.data[0] = ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f;
+    geometricObject.data[1] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f;
+    geometricObject.data[2] = 0;
+
+    geometricObject.data[3] = (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f;
+    geometricObject.data[4] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f;
+    geometricObject.data[5] = 0;
+
+    geometricObject.data[6] = (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f;
+    geometricObject.data[7] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f;
+    geometricObject.data[8] = 0;
+
+    geometricObject.data[9] = ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f;
+    geometricObject.data[10] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f;
+    geometricObject.data[11] = 0;
 
     return geometricObject;
 }
 
 void Controller::init() {
+    // geometricObjects = getGeometricObjects();
+
     GameObject gameRectangle;
     gameRectangle.horizontalPosition = 100;
     gameRectangle.verticalPosition = 100;
@@ -59,8 +77,10 @@ void Controller::init() {
     gameRectangle.verticalSize = 100;
 
     gameObjects.push_back(gameRectangle);
+    GeometricObject aloneGeometricObject = getGeometricObject(gameRectangle);
 
-    geometricObjects = getGeometricObjects();
+    geometricObjects.push_back(aloneGeometricObject);
+
     window.initGraphicArrayAndBuffer();
 }
 
@@ -112,6 +132,10 @@ void moveDown(float *data, size_t size) {
     }
 }
 
+void moveDownGeometricObject(GeometricObject& geometricObject) {
+    moveDown(geometricObject.data, geometricObject.vertexSize);
+}
+
 void Controller::runLoop() {
     bool isRunning = true;
 
@@ -126,9 +150,8 @@ void Controller::runLoop() {
             isRunning = false;
         } else if (event == WINDOW_MOVE_UP) {
             moveUpGeometricObject(geometricObjects[0]);
-            // moveUp(rectangle, 4);
         } else if (event == WINDOW_MOVE_DOWN) {
-            moveDown(rectangle, 4);
+            moveDownGeometricObject(geometricObjects[0]);
         }
 
         window.setGeometricObjects(geometricObjects);
