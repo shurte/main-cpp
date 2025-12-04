@@ -139,11 +139,11 @@ void moveDownGeometricObject(GeometricObject& geometricObject) {
 void Controller::runLoop() {
     bool isRunning = true;
 
-    window.setGeometricObjects(geometricObjects);
-    window.drawScene();
-
     while (isRunning) {
+        window.setGeometricObjects(geometricObjects);
+        window.drawScene();
         window.update();
+
         size_t event = window.getCurrentEvent();
 
         if (event == WINDOW_EXIT) {
@@ -153,9 +153,6 @@ void Controller::runLoop() {
         } else if (event == WINDOW_MOVE_DOWN) {
             moveDownGeometricObject(geometricObjects[0]);
         }
-
-        window.setGeometricObjects(geometricObjects);
-        window.drawScene();
     }
 }
 
