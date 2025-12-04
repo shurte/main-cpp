@@ -16,6 +16,7 @@ cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
 
 add_subdirectory(hello)
 add_subdirectory(ui)
+add_subdirectory(game)
 add_subdirectory(test)
 
 file(GLOB SOURCES *.cpp)
@@ -26,6 +27,8 @@ target_link_libraries(main hello)
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/hello/)
 target_link_libraries(main ui)
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/ui/)
+target_link_libraries(main game)
+target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/game/)
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
 
