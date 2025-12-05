@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Game.hpp>
 #include <GameObject.hpp>
 #include <GeometricObject.hpp>
 #include <Window.hpp>
@@ -12,7 +13,8 @@
 class Controller {
     public:
         Controller() 
-            : window(WINDOW_SIZE_H, WINDOW_SIZE_V) {
+            : window(WINDOW_SIZE_H, WINDOW_SIZE_V)
+            , game() {
 
         }
 
@@ -32,6 +34,7 @@ class Controller {
 
     private:
         Window window;
+        Game game;
         std::vector<GameObject> gameObjects;
         std::vector<GeometricObject> geometricObjects;
 };

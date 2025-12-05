@@ -23,12 +23,6 @@ static float triangle[] = {
 std::vector<GeometricObject> Controller::getGeometricObjects() {
     std::vector<GeometricObject> geometricObjects;
 
-    // GeometricObject objectOne;
-    // objectOne.data = rectangle;
-    // objectOne.vertexSize = 4;
-
-    // geometricObjects.push_back(objectOne);
-
     GeometricObject objectTwo;
     objectTwo.data = rectangleTwo;
     objectTwo.vertexSize = 4;
@@ -68,8 +62,6 @@ GeometricObject getGeometricObject(const GameObject& gameObject) {
 }
 
 void Controller::init() {
-    // geometricObjects = getGeometricObjects();
-
     GameObject gameRectangle;
     gameRectangle.horizontalPosition = 100;
     gameRectangle.verticalPosition = 100;
@@ -140,19 +132,28 @@ void Controller::runLoop() {
     bool isRunning = true;
 
     while (isRunning) {
+        GameObject gameObject = game.getGameObject();
+        GeometricObject geometricObject = getGeometricObject(gameObject);
+        geometricObjects.clear();
+        geometricObjects.push_back(geometricObject);
         window.setGeometricObjects(geometricObjects);
         window.drawScene();
         window.update();
 
         size_t event = window.getCurrentEvent();
+        game.setCurrentEvent(0);
 
         if (event == WINDOW_EXIT) {
             isRunning = false;
         } else if (event == WINDOW_MOVE_UP) {
             moveUpGeometricObject(geometricObjects[0]);
+            game.setCurrentEvent(MOVE_UP);
         } else if (event == WINDOW_MOVE_DOWN) {
             moveDownGeometricObject(geometricObjects[0]);
+            game.setCurrentEvent(MOVE_DOWN);
         }
+
+        game.update();
     }
 }
 
