@@ -26,3 +26,19 @@ std::string hello::getAppDirectory() {
 #endif
     return directory;
 }
+
+#include <chrono>
+
+void Hello::clock() {
+    using namespace std::chrono;
+    milliseconds start = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+    milliseconds current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+
+    for (int i = 1; i <= 5; ++i) {
+        while ((current - start) < milliseconds(1000 * i)) {
+            current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+        }
+
+        std::cout << i << (i == 1 ? " second" : " seconds") << '\n';
+    }
+}

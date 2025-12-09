@@ -21,4 +21,5 @@ class Hello {
         Hello();
         ~Hello();
         void write(const std::string& info);
+        void clock();
 };

@@ -5,6 +5,8 @@
 #include <GeometricObject.hpp>
 #include <Window.hpp>
 
+#include <chrono>
+using namespace std::chrono;
 #include <vector>
 
 #define WINDOW_SIZE_H 1200
@@ -30,11 +32,8 @@ class Controller {
         void finish();
 
     private:
-        std::vector<GeometricObject> getGeometricObjects();
-
-    private:
         Window window;
         Game game;
-        std::vector<GameObject> gameObjects;
         std::vector<GeometricObject> geometricObjects;
+        milliseconds currentTime = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
 };

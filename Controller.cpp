@@ -1,43 +1,5 @@
 #include <Controller.hpp>
 
-static float rectangle[] = {
-    -0.25f, 0.75f, 0.0f,
-    -0.25f, 0.25f, 0.0f,
-    -0.75f, 0.25f, 0.0f,
-    -0.75f, 0.75f, 0.0f,
-};
-
-static float rectangleTwo[] = {
-    0.25f, 0.75f, 0.0f,
-    0.25f, 0.25f, 0.0f,
-    0.75f, 0.25f, 0.0f,
-    0.75f, 0.75f, 0.0f,
-};
-
-static float triangle[] = {
-    0.5f, -0.25f, 0.0f,
-    0.25f, -0.75f, 0.0f,
-    0.75f, -0.75f, 0.0f
-};
-
-std::vector<GeometricObject> Controller::getGeometricObjects() {
-    std::vector<GeometricObject> geometricObjects;
-
-    GeometricObject objectTwo;
-    objectTwo.data = rectangleTwo;
-    objectTwo.vertexSize = 4;
-
-    geometricObjects.push_back(objectTwo);
-
-    GeometricObject objectThree;
-    objectThree.data = triangle;
-    objectThree.vertexSize = 3;
-
-    geometricObjects.push_back(objectThree);
-
-    return geometricObjects;
-}
-
 GeometricObject getGeometricObject(const GameObject& gameObject) {
     GeometricObject geometricObject;
     geometricObject.vertexSize = 4;
@@ -62,80 +24,20 @@ GeometricObject getGeometricObject(const GameObject& gameObject) {
 }
 
 void Controller::init() {
-    GameObject gameRectangle;
-    gameRectangle.horizontalPosition = 100;
-    gameRectangle.verticalPosition = 100;
-    gameRectangle.horizontalSize = 100;
-    gameRectangle.verticalSize = 100;
-
-    gameObjects.push_back(gameRectangle);
-    GeometricObject aloneGeometricObject = getGeometricObject(gameRectangle);
-
-    geometricObjects.push_back(aloneGeometricObject);
-
     window.initGraphicArrayAndBuffer();
-}
-
-void moveUp(float *data, size_t size) {
-    float topBorder = -1.0f;
-
-    for (size_t i = 0; i < size; ++i) {
-        size_t index = i * 3 + 1;
-        if ((data[index]) > topBorder) {
-            topBorder = data[index];
-        }
-    }
-
-    if ((topBorder + 0.1f) > 1.0f) {
-        return;
-    }
-
-    for (size_t i = 0; i < size; ++i) {
-        size_t index = i * 3 + 1;
-        int cache = round(data[index] * 100);
-        int newValue = cache + 1;
-        data[index] = (float) newValue / 100.0f;
-    }
-}
-
-void moveUpGeometricObject(GeometricObject& geometricObject) {
-    moveUp(geometricObject.data, geometricObject.vertexSize);
-}
-
-void moveDown(float *data, size_t size) {
-    float bottomBorder = 1.0f;
-
-    for (size_t i = 0; i < size; ++i) {
-        size_t index = i * 3 + 1;
-        if ((data[index]) < bottomBorder) {
-            bottomBorder = data[index];
-        }
-    }
-
-    if ((bottomBorder - 0.1f) < -1.0f) {
-        return;
-    }
-
-    for (size_t i = 0; i < size; ++i) {
-        size_t index = i * 3 + 1;
-        int cache = round(data[index] * 100);
-        int newValue = cache - 1;
-        data[index] = (float) newValue / 100.0f;
-    }
-}
-
-void moveDownGeometricObject(GeometricObject& geometricObject) {
-    moveDown(geometricObject.data, geometricObject.vertexSize);
 }
 
 void Controller::runLoop() {
     bool isRunning = true;
 
     while (isRunning) {
-        GameObject gameObject = game.getGameObject();
-        GeometricObject geometricObject = getGeometricObject(gameObject);
         geometricObjects.clear();
-        geometricObjects.push_back(geometricObject);
+        std::vector<GameObject> gameObjects = game.getGameObjects();
+        for (const GameObject& gameObject : gameObjects) {
+            GeometricObject geometricObject = getGeometricObject(gameObject);
+            geometricObjects.push_back(geometricObject);
+        }
+
         window.setGeometricObjects(geometricObjects);
         window.drawScene();
         window.update();
@@ -146,12 +48,16 @@ void Controller::runLoop() {
         if (event == WINDOW_EXIT) {
             isRunning = false;
         } else if (event == WINDOW_MOVE_UP) {
-            moveUpGeometricObject(geometricObjects[0]);
             game.setCurrentEvent(MOVE_UP);
         } else if (event == WINDOW_MOVE_DOWN) {
-            moveDownGeometricObject(geometricObjects[0]);
             game.setCurrentEvent(MOVE_DOWN);
         }
+
+        milliseconds current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+        while ((current - currentTime) < milliseconds(100)) {
+            current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+        }
+        currentTime = current;
 
         game.update();
     }
