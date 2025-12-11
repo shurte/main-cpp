@@ -24,6 +24,7 @@ GeometricObject getGeometricObject(const GameObject& gameObject) {
 }
 
 void Controller::init() {
+    game.init();
     window.initGraphicArrayAndBuffer();
 }
 
@@ -54,7 +55,7 @@ void Controller::runLoop() {
         }
 
         milliseconds current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
-        while ((current - currentTime) < milliseconds(100)) {
+        while ((current - currentTime) < milliseconds(20)) {
             current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
         }
         currentTime = current;

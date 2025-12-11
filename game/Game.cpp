@@ -81,6 +81,26 @@ void updateGameObject(GameObject& gameObject, unsigned int gameEvent) {
     }
 }
 
+void Game::init() {
+    GameObject gameRectangle;
+    gameRectangle.horizontalPosition = 100;
+    gameRectangle.verticalPosition = 100;
+    gameRectangle.horizontalSize = 100;
+    gameRectangle.verticalSize = 100;
+
+    gameObjects.push_back(gameRectangle);
+
+    GameObject gameRectangleWithVelocity;
+    gameRectangleWithVelocity.horizontalPosition = 600;
+    gameRectangleWithVelocity.verticalPosition = 100;
+    gameRectangleWithVelocity.horizontalSize = 100;
+    gameRectangleWithVelocity.verticalSize = 100;
+    gameRectangleWithVelocity.horizontalVelocity = 10;
+    gameRectangleWithVelocity.verticalVelocity = 10;
+
+    gameObjects.push_back(gameRectangleWithVelocity);
+}
+
 void Game::update() {
     for (GameObject& gameObject : gameObjects) {
         updateGameObject(gameObject, currentEvent);
@@ -89,10 +109,6 @@ void Game::update() {
 
 void Game::setCurrentEvent(unsigned int newEvent) {
     currentEvent = newEvent;
-}
-
-GameObject Game::getGameObject() {
-    return gameObject;
 }
 
 std::vector<GameObject> Game::getGameObjects() {
