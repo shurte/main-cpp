@@ -22,13 +22,14 @@ class Window {
         Window(size_t sizeHorizontal, size_t sizeVertical);
         ~Window();
 
-        void initGraphicArrayAndBuffer();
+        void init();
         void update();
-        void drawScene();
         void setGeometricObjects(const std::vector<GeometricObject>& geometricObjects);
         size_t getCurrentEvent();
 
     private:
+        void updateEvent();
+        void redraw();
         void drawObjects();
         void drawObject(const GeometricObject& geometricObject);
 

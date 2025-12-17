@@ -28,7 +28,7 @@ Window::~Window() {
 static unsigned int VAO[1];
 static unsigned int VBO[1];
 
-void Window::initGraphicArrayAndBuffer() {
+void Window::init() {
     glGenVertexArrays(1, VAO);
     glGenBuffers(1, VBO);
 
@@ -36,7 +36,7 @@ void Window::initGraphicArrayAndBuffer() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 }
 
-void Window::drawScene() {
+void Window::redraw() {
     glClearColor(0.0f, 0.67f, 0.67f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -58,6 +58,11 @@ void Window::drawObject(const GeometricObject& geometricObject) {
     glEnableVertexAttribArray(0);
     glDrawArrays(GL_POLYGON, 0, geometricObject.vertexSize);
     glBindVertexArray(0);
+}
+
+void Window::update() {
+    redraw();
+    updateEvent();
 }
 
 size_t getKeyEvent(const SDL_Event& event) {
@@ -88,7 +93,7 @@ size_t getWindowEvent(const SDL_Event& event) {
     return 0;
 }
 
-void Window::update() {
+void Window::updateEvent() {
     SDL_Event event;
     currentEvent = 0;
     while (SDL_PollEvent(&event)) {

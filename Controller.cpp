@@ -25,7 +25,7 @@ GeometricObject getGeometricObject(const GameObject& gameObject) {
 
 void Controller::init() {
     game.init();
-    window.initGraphicArrayAndBuffer();
+    window.init();
 }
 
 void Controller::runLoop() {
@@ -40,11 +40,8 @@ void Controller::runLoop() {
         }
 
         window.setGeometricObjects(geometricObjects);
-        window.drawScene();
         window.update();
-
         size_t event = window.getCurrentEvent();
-        game.setCurrentEvent(0);
 
         if (event == WINDOW_EXIT) {
             isRunning = false;
@@ -52,6 +49,8 @@ void Controller::runLoop() {
             game.setCurrentEvent(MOVE_UP);
         } else if (event == WINDOW_MOVE_DOWN) {
             game.setCurrentEvent(MOVE_DOWN);
+        } else {
+            game.setCurrentEvent(0);
         }
 
         milliseconds current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
