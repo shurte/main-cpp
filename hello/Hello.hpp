@@ -20,6 +20,6 @@ class Hello {
     public:
         Hello();
         ~Hello();
-        void write(const std::string& info);
-        void clock();
+        void write(const std::string& info) const;
+        void clock() const;
 };

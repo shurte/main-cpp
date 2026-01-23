@@ -8,7 +8,7 @@ Hello::~Hello() {
     std::cout << "Bye" << '\n';
 }
 
-void Hello::write(const std::string& info) {
+void Hello::write(const std::string& info) const {
     std::cout << info.c_str() << '\n';
 }
 
@@ -29,7 +29,7 @@ std::string hello::getAppDirectory() {
 
 #include <chrono>
 
-void Hello::clock() {
+void Hello::clock() const {
     using namespace std::chrono;
     milliseconds start = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
     milliseconds current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
