@@ -2,7 +2,7 @@
 #include <Controller.hpp>
 
 int main(int argc, char** argv) {
-    Hello hello;
+    const Hello hello;
     hello.clock();
 
     std::string directory = hello::getAppDirectory();
