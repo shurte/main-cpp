@@ -12,22 +12,22 @@ int main(int argc, char** argv) {
 
     FrameManager frameManager;
     frameManager.start();
-    frameManager.printStartTime();
-    int64_t previousFrameMilliseconds = 0;
+    frameManager.printCurrentTime();
+    int64_t startFrames = frameManager.getFramesFromStart();
 
     for (std::size_t i = 0; i < 10; ++i) {
-        int64_t millisecondsFromPrevious = previousFrameMilliseconds + frameManager.getMillisecondsFromPrevious();
-        while (millisecondsFromPrevious < 1000) {
-            Sleep(1000);
-            millisecondsFromPrevious += frameManager.getMillisecondsFromPrevious();
+        int64_t currentFrames = frameManager.getFramesFromStart();
+        while (currentFrames - startFrames < 60) {
+            Sleep(1000 / 120);
+            currentFrames = frameManager.getFramesFromStart();
         }
 
-        while (millisecondsFromPrevious > 1000) {
+        while (currentFrames > startFrames) {
             frameManager.printCurrentTime();
-            millisecondsFromPrevious -= 1000;
+            std::cout << "Start frames: " << startFrames << '\n';
+            std::cout << "Current frames: " << currentFrames << '\n' << '\n';
+            startFrames += 60;
         }
-
-        previousFrameMilliseconds = millisecondsFromPrevious;
     }
 
     Controller controller;
