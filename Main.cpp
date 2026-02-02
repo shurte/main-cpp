@@ -32,8 +32,11 @@ int main(int argc, char** argv) {
     for (std::size_t i = 0; i < 10; ++i) {
         int64_t currentFrames = frameManager.getFramesFromStart();
         while (currentFrames - startFrames < 60) {
-            // Sleep(1000 / 120);
+            #ifdef _WIN32
+            Sleep(1000 / 120);
+            #else
             nanosleep(&mySpec, &myRem);
+            #endif
             currentFrames = frameManager.getFramesFromStart();
         }
 
