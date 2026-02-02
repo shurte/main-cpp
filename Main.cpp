@@ -3,6 +3,11 @@
 #include <Hello.hpp>
 // #include <stdlib.h>
 
+/**
+ * The main function.
+ * @param argc Number of arguments from the command line.
+ * @param argv Values of arguments from the command line.
+ */
 int main(int argc, char** argv) {
     const Hello hello;
     // hello.clock();
