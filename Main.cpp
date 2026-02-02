@@ -2,13 +2,6 @@
 #include <FrameManager.hpp>
 #include <Hello.hpp>
 
-//#ifdef _WIN32
-// #include <windows.h>
-// #else
-// #include <unistd.h>
-// #endif
-// #include <stdlib.h>
-
 /**
  * The main function.
  * @param argc Number of arguments from the command line.
