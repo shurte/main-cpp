@@ -1,6 +1,12 @@
 #include <Controller.hpp>
 #include <FrameManager.hpp>
 #include <Hello.hpp>
+
+//#ifdef _WIN32
+// #include <windows.h>
+// #else
+// #include <unistd.h>
+// #endif
 // #include <stdlib.h>
 
 /**
@@ -20,10 +26,14 @@ int main(int argc, char** argv) {
     frameManager.printCurrentTime();
     int64_t startFrames = frameManager.getFramesFromStart();
 
+    timespec mySpec, myRem;
+    mySpec.tv_nsec = 1000 / 120 * 1000;
+
     for (std::size_t i = 0; i < 10; ++i) {
         int64_t currentFrames = frameManager.getFramesFromStart();
         while (currentFrames - startFrames < 60) {
-            Sleep(1000 / 120);
+            // Sleep(1000 / 120);
+            nanosleep(&mySpec, &myRem);
             currentFrames = frameManager.getFramesFromStart();
         }
 
