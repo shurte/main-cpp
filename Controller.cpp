@@ -1,5 +1,18 @@
 #include <Controller.hpp>
 
+#include <FrameManager.hpp>
+
+#ifdef _WIN32
+#include <wtypes.h>
+#else
+#include <limits.h>
+#include <unistd.h>     //readlink
+#endif
+
+static FrameManager frameManager;
+constexpr int64_t millisecondsInHalfFrame = 1000 / 120;
+constexpr int64_t nanosecondsInHalfFrame = millisecondsInHalfFrame * 1000;
+
 GeometricObject getGeometricObject(const GameObject& gameObject) {
     GeometricObject geometricObject;
     geometricObject.vertexSize = 4;
@@ -26,6 +39,7 @@ GeometricObject getGeometricObject(const GameObject& gameObject) {
 void Controller::init() {
     game.init();
     window.init();
+    frameManager.start();
 }
 
 void Controller::runLoop() {
@@ -34,6 +48,7 @@ void Controller::runLoop() {
     while (isRunning) {
         geometricObjects.clear();
         std::vector<GameObject> gameObjects = game.getGameObjects();
+
         for (const GameObject& gameObject : gameObjects) {
             GeometricObject geometricObject = getGeometricObject(gameObject);
             geometricObjects.push_back(geometricObject);
@@ -41,6 +56,7 @@ void Controller::runLoop() {
 
         window.setGeometricObjects(geometricObjects);
         window.update();
+        int64_t startFrames = frameManager.getFramesFromStart();
         size_t event = window.getCurrentEvent();
 
         if (event == WINDOW_EXIT) {
@@ -53,13 +69,26 @@ void Controller::runLoop() {
             game.setCurrentEvent(0);
         }
 
-        milliseconds current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
-        while ((current - currentTime) < milliseconds(20)) {
-            current = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
-        }
-        currentTime = current;
-
+        timespec mySpec, myRem;
+        mySpec.tv_nsec = nanosecondsInHalfFrame;
         game.update();
+        int64_t currentFrames = frameManager.getFramesFromStart();
+
+        while (currentFrames - startFrames < 1) {
+            #ifdef _WIN32
+            Sleep(millisecondsInHalfFrame);
+            #else
+            nanosleep(&mySpec, &myRem);
+            #endif
+            currentFrames = frameManager.getFramesFromStart();
+        }
+
+        ++startFrames;
+
+        while (currentFrames > startFrames) {
+            game.update();
+            ++startFrames;
+        }
     }
 }
 
