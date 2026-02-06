@@ -62,12 +62,8 @@ void moveGameObjectWithVelocity(GameObject& gameObject) {
 }
 
 void updateGameObject(GameObject& gameObject, unsigned int gameEvent) {
-    if (gameEvent == 0) {
-        moveGameObjectWithVelocity(gameObject);
-        return;
-    }
-
     if (gameObject.horizontalVelocity != 0 || gameObject.verticalVelocity != 0) {
+        moveGameObjectWithVelocity(gameObject);
         return;
     }
 
