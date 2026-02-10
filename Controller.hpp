@@ -37,6 +37,4 @@ class Controller {
     private:
         Window window;
         Game game;
-        std::vector<GeometricObject> geometricObjects;
-        milliseconds currentTime = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
 };

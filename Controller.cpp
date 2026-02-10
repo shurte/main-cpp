@@ -46,8 +46,8 @@ void Controller::runLoop() {
     bool isRunning = true;
 
     while (isRunning) {
-        geometricObjects.clear();
-        std::vector<GameObject> gameObjects = game.getGameObjects();
+        std::vector<GeometricObject> geometricObjects;
+        const std::vector<GameObject>& gameObjects = game.getGameObjects();
 
         for (const GameObject& gameObject : gameObjects) {
             GeometricObject geometricObject = getGeometricObject(gameObject);
@@ -56,7 +56,7 @@ void Controller::runLoop() {
 
         window.setGeometricObjects(geometricObjects);
         window.update();
-        int64_t startFrames = frameManager.getFramesFromStart();
+
         size_t event = window.getCurrentEvent();
 
         if (event == WINDOW_EXIT) {
@@ -69,8 +69,7 @@ void Controller::runLoop() {
             game.setCurrentEvent(0);
         }
 
-        timespec mySpec, myRem;
-        mySpec.tv_nsec = nanosecondsInHalfFrame;
+        int64_t startFrames = frameManager.getFramesFromStart();
         game.update();
         int64_t currentFrames = frameManager.getFramesFromStart();
 
@@ -78,6 +77,8 @@ void Controller::runLoop() {
             #ifdef _WIN32
             Sleep(millisecondsInHalfFrame);
             #else
+            timespec mySpec, myRem;
+            mySpec.tv_nsec = nanosecondsInHalfFrame;
             nanosleep(&mySpec, &myRem);
             #endif
             currentFrames = frameManager.getFramesFromStart();
