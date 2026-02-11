@@ -34,6 +34,9 @@ class Controller {
         void runLoop();
         void finish();
 
+        void updateWindow();
+        void updateGame();
+
     private:
         Window window;
         Game game;

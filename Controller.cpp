@@ -42,20 +42,22 @@ void Controller::init() {
     frameManager.start();
 }
 
+std::vector<GeometricObject> getGeometricObjects(const std::vector<GameObject>& gameObjects) {
+    std::vector<GeometricObject> geometricObjects(gameObjects.size());
+
+    for (const GameObject& gameObject : gameObjects) {
+        GeometricObject geometricObject = getGeometricObject(gameObject);
+        geometricObjects.push_back(geometricObject);
+    }
+
+    return geometricObjects;
+}
+
 void Controller::runLoop() {
     bool isRunning = true;
 
     while (isRunning) {
-        std::vector<GeometricObject> geometricObjects;
-        const std::vector<GameObject>& gameObjects = game.getGameObjects();
-
-        for (const GameObject& gameObject : gameObjects) {
-            GeometricObject geometricObject = getGeometricObject(gameObject);
-            geometricObjects.push_back(geometricObject);
-        }
-
-        window.setGeometricObjects(geometricObjects);
-        window.update();
+        updateWindow();
 
         size_t event = window.getCurrentEvent();
 
@@ -69,30 +71,40 @@ void Controller::runLoop() {
             game.setCurrentEvent(0);
         }
 
-        int64_t startFrames = frameManager.getFramesFromStart();
-        game.update();
-        int64_t currentFrames = frameManager.getFramesFromStart();
-
-        while (currentFrames - startFrames < 1) {
-            #ifdef _WIN32
-            Sleep(millisecondsInHalfFrame);
-            #else
-            timespec mySpec, myRem;
-            mySpec.tv_nsec = nanosecondsInHalfFrame;
-            nanosleep(&mySpec, &myRem);
-            #endif
-            currentFrames = frameManager.getFramesFromStart();
-        }
-
-        ++startFrames;
-
-        while (currentFrames > startFrames) {
-            game.update();
-            ++startFrames;
-        }
+        updateGame();
     }
 }
 
 void Controller::finish() {
 
+}
+
+void Controller::updateWindow() {
+    const std::vector<GameObject>& gameObjects = game.getGameObjects();
+    window.setGeometricObjects(getGeometricObjects(gameObjects));
+    window.update();
+}
+
+void Controller::updateGame() {
+    int64_t startFrames = frameManager.getFramesFromStart();
+    game.update();
+    int64_t currentFrames = frameManager.getFramesFromStart();
+
+    while (currentFrames - startFrames < 1) {
+        #ifdef _WIN32
+        Sleep(millisecondsInHalfFrame);
+        #else
+        timespec mySpec, myRem;
+        mySpec.tv_nsec = nanosecondsInHalfFrame;
+        nanosleep(&mySpec, &myRem);
+        #endif
+        currentFrames = frameManager.getFramesFromStart();
+    }
+
+    ++startFrames;
+
+    while (currentFrames > startFrames) {
+        game.update();
+        ++startFrames;
+    }
 }
