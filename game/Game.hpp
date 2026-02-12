@@ -4,9 +4,11 @@
 
 #include <vector>
 
-#define MOVE_UP 1
-#define MOVE_DOWN 2
-#define MOVE_TIME 3
+constexpr size_t MOVE_UP = 1;
+constexpr size_t MOVE_DOWN = 2;
+constexpr size_t MOVE_TIME = 3;
+constexpr size_t MOVE_LEFT = 4;
+constexpr size_t MOVE_RIGHT = 5;
 
 class Game {
     public:

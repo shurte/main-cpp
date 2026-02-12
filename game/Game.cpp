@@ -24,6 +24,28 @@ void moveGameObjectDown(GameObject& gameObject) {
     }
 }
 
+void moveGameObjectLeft(GameObject& gameObject) {
+    static unsigned int leftBorder = 50;
+    static unsigned int stepSize = 1;
+
+    unsigned int newHorizontalPosition = gameObject.horizontalPosition - stepSize;
+
+    if (newHorizontalPosition > leftBorder) {
+        gameObject.horizontalPosition = newHorizontalPosition;
+    }
+}
+
+void moveGameObjectRight(GameObject& gameObject) {
+    static unsigned int rightBorder = 1150;
+    static unsigned int stepSize = 1;
+
+    unsigned int newHorizontalPosition = gameObject.horizontalPosition + stepSize;
+
+    if (newHorizontalPosition + gameObject.horizontalSize < rightBorder) {
+        gameObject.horizontalPosition = newHorizontalPosition;
+    }
+}
+
 void moveGameObjectWithVelocity(GameObject& gameObject) {
     if (gameObject.horizontalVelocity == 0 && gameObject.verticalVelocity == 0) {
         return;
@@ -73,6 +95,12 @@ void updateGameObject(GameObject& gameObject, unsigned int gameEvent) {
             break;
         case MOVE_DOWN:
             moveGameObjectDown(gameObject);
+            break;
+        case MOVE_LEFT:
+            moveGameObjectLeft(gameObject);
+            break;
+        case MOVE_RIGHT:
+            moveGameObjectRight(gameObject);
             break;
     }
 }

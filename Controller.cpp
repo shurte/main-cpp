@@ -67,6 +67,10 @@ void Controller::runLoop() {
             game.setCurrentEvent(MOVE_UP);
         } else if (event == WINDOW_MOVE_DOWN) {
             game.setCurrentEvent(MOVE_DOWN);
+        } else if (event == WINDOW_MOVE_LEFT) {
+            game.setCurrentEvent(MOVE_LEFT);
+        } else if (event == WINDOW_MOVE_RIGHT) {
+            game.setCurrentEvent(MOVE_RIGHT);
         } else {
             game.setCurrentEvent(0);
         }
@@ -85,19 +89,23 @@ void Controller::updateWindow() {
     window.update();
 }
 
+void sleep() {
+    #ifdef _WIN32
+    Sleep(millisecondsInHalfFrame);
+    #else
+    timespec mySpec, myRem;
+    mySpec.tv_nsec = nanosecondsInHalfFrame;
+    nanosleep(&mySpec, &myRem);
+    #endif
+}
+
 void Controller::updateGame() {
     int64_t startFrames = frameManager.getFramesFromStart();
     game.update();
     int64_t currentFrames = frameManager.getFramesFromStart();
 
     while (currentFrames - startFrames < 1) {
-        #ifdef _WIN32
-        Sleep(millisecondsInHalfFrame);
-        #else
-        timespec mySpec, myRem;
-        mySpec.tv_nsec = nanosecondsInHalfFrame;
-        nanosleep(&mySpec, &myRem);
-        #endif
+        sleep();
         currentFrames = frameManager.getFramesFromStart();
     }
 
