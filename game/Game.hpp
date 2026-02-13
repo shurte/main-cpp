@@ -17,7 +17,7 @@ class Game {
 
         void init();
         void update();
-        void setCurrentEvent(unsigned int newEvent);
+        void setCurrentEvent(size_t newEvent);
         std::vector<GameObject> getGameObjects();
 
     private:

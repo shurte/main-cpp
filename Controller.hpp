@@ -1,16 +1,10 @@
 #pragma once
 
 #include <Game.hpp>
-#include <GameObject.hpp>
-#include <GeometricObject.hpp>
 #include <Window.hpp>
 
-#include <chrono>
-using namespace std::chrono;
-#include <vector>
-
-#define WINDOW_SIZE_H 1200
-#define WINDOW_SIZE_V 600
+constexpr int64_t WINDOW_SIZE_H = 1200;
+constexpr int64_t WINDOW_SIZE_V = 600;
 
 /**
  * The main controller that synchronizes the game logic and the UI.

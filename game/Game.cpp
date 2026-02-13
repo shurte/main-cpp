@@ -131,7 +131,7 @@ void Game::update() {
     }
 }
 
-void Game::setCurrentEvent(unsigned int newEvent) {
+void Game::setCurrentEvent(size_t newEvent) {
     currentEvent = newEvent;
 }
 
