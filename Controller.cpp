@@ -1,5 +1,6 @@
 #include <Controller.hpp>
 
+#include <Hello.hpp>
 #include <FrameManager.hpp>
 
 #ifdef _WIN32
@@ -37,6 +38,12 @@ GeometricObject getGeometricObject(const GameObject& gameObject) {
 }
 
 void Controller::init() {
+    const Hello hello;
+    // hello.clock();
+
+    std::string directory = hello::getAppDirectory();
+    hello.write(directory);
+
     game.init();
     window.init();
     frameManager.start();

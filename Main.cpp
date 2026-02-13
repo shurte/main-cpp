@@ -1,9 +1,6 @@
 #include <Controller.hpp>
-#include <FrameManager.hpp>
-#include <Hello.hpp>
 
-constexpr int64_t millisecondsInHalfFrame = 1000 / 120;
-constexpr int64_t nanosecondsInHalfFrame = millisecondsInHalfFrame * 1000;
+#include <iostream>
 
 /**
  * The main function.
@@ -11,14 +8,17 @@ constexpr int64_t nanosecondsInHalfFrame = millisecondsInHalfFrame * 1000;
  * @param argv Values of arguments from the command line.
  */
 int main(int argc, char** argv) {
-    const Hello hello;
-    // hello.clock();
+    try {
+        for (size_t i = 0; i < argc; ++i) {
+            std::cout << argv[i] << '\n';
+        }
 
-    std::string directory = hello::getAppDirectory();
-    hello.write(directory);
+        Controller controller;
+        controller.run();
 
-    Controller controller;
-    controller.run();
-
-    return 0;
+        return 0;
+    } catch (...) {
+        std::cout << "an unexpected error" << '\n';
+        return 1;
+    }
 }
