@@ -1,7 +1,7 @@
-#include <Controller.hpp>
+#include <Controller.h>
 
-#include <Hello.hpp>
-#include <FrameManager.hpp>
+#include <Hello.h>
+#include <FrameManager.h>
 
 #ifdef _WIN32
 #include <wtypes.h>

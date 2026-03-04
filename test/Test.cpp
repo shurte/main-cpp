@@ -1,4 +1,4 @@
-#include <Hello.hpp>
+#include <Hello.h>
 
 #include <catch2/catch_test_macros.hpp>
 

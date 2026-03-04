@@ -1,4 +1,4 @@
-#include <Window.hpp>
+#include <Window.h>
 
 Window::Window(size_t sizeHorizontal, size_t sizeVertical) {
     SDL_Init(SDL_INIT_EVERYTHING);

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Game.hpp>
-#include <Window.hpp>
+#include <Game.h>
+#include <Window.h>
 
 constexpr int64_t WINDOW_SIZE_H = 1200;
 constexpr int64_t WINDOW_SIZE_V = 600;

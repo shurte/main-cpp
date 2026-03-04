@@ -1,4 +1,4 @@
-#include <Hello.hpp>
+#include <Hello.h>
 
 Hello::Hello() {
     std::cout << "Hello" << '\n';

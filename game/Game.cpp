@@ -1,6 +1,6 @@
-#include <Game.hpp>
+#include <Game.h>
 
-#include <GameObject.hpp>
+#include <GameObject.h>
 
 void moveGameObjectUp(GameObject& gameObject) {
     static unsigned int topBorder = 50;

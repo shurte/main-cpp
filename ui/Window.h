@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GeometricObject.hpp>
+#include <GeometricObject.h>
 
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
