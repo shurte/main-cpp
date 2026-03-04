@@ -68,13 +68,13 @@ void Window::update() {
 size_t getKeyEvent(const SDL_Event& event) {
     switch (event.key.keysym.sym) {
         case SDLK_w:
-            return WINDOW_MOVE_UP;
+            return windowMoveUp;
         case SDLK_s:
-            return WINDOW_MOVE_DOWN;
+            return windowMoveDown;
         case SDLK_a:
-            return WINDOW_MOVE_LEFT;
+            return windowMoveLeft;
         case SDLK_d:
-            return WINDOW_MOVE_RIGHT;
+            return windowMoveRight;
     }
     return 0;
 }
@@ -82,11 +82,11 @@ size_t getKeyEvent(const SDL_Event& event) {
 size_t getWindowEvent(const SDL_Event& event) {
     switch (event.type) {
         case SDL_QUIT:
-            return WINDOW_EXIT;
+            return windowExit;
         case SDL_MOUSEBUTTONDOWN:
-            return WINDOW_MOUSE_DOWN;
+            return windowMouseDown;
         case SDL_MOUSEBUTTONUP:
-            return WINDOW_MOUSE_UP;
+            return windowMouseUp;
         case SDL_KEYDOWN:
             return getKeyEvent(event);
     }

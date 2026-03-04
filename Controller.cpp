@@ -66,15 +66,15 @@ void Controller::runLoop() {
 
         size_t event = window.getCurrentEvent();
 
-        if (event == WINDOW_EXIT) {
+        if (event == windowExit) {
             isRunning = false;
-        } else if (event == WINDOW_MOVE_UP) {
+        } else if (event == windowMoveUp) {
             game.setCurrentEvent(MOVE_UP);
-        } else if (event == WINDOW_MOVE_DOWN) {
+        } else if (event == windowMoveDown) {
             game.setCurrentEvent(MOVE_DOWN);
-        } else if (event == WINDOW_MOVE_LEFT) {
+        } else if (event == windowMoveLeft) {
             game.setCurrentEvent(MOVE_LEFT);
-        } else if (event == WINDOW_MOVE_RIGHT) {
+        } else if (event == windowMoveRight) {
             game.setCurrentEvent(MOVE_RIGHT);
         } else {
             game.setCurrentEvent(0);

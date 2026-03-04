@@ -9,13 +9,13 @@
 
 #include <vector>
 
-#define WINDOW_MOUSE_DOWN 1
-#define WINDOW_MOUSE_UP 2
-#define WINDOW_MOVE_UP 3
-#define WINDOW_MOVE_DOWN 4
-#define WINDOW_MOVE_RIGHT 5
-#define WINDOW_MOVE_LEFT 6
-#define WINDOW_EXIT 128
+constexpr int8_t windowMouseDown = 1;
+constexpr int8_t windowMouseUp = 2;
+constexpr int8_t windowMoveUp = 3;
+constexpr int8_t windowMoveDown = 4;
+constexpr int8_t windowMoveRight = 5;
+constexpr int8_t windowMoveLeft = 6;
+constexpr int8_t windowExit = 128;
 
 class Window {
     public:
