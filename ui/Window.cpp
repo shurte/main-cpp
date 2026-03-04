@@ -46,17 +46,17 @@ void Window::redraw() {
 }
 
 void Window::drawObjects() {
-    for (const GeometricObject& geometricObject : geometricObjects) {
-        drawObject(geometricObject);
+    for (const UiObject& uiObject : uiObjects) {
+        drawObject(uiObject);
     }
 }
 
-void Window::drawObject(const GeometricObject& geometricObject) {
+void Window::drawObject(const UiObject& uiObject) {
     glBindVertexArray(VAO[0]);
-    glBufferData(GL_ARRAY_BUFFER, geometricObject.vertexSize * 3 * sizeof(float), geometricObject.data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, uiObject.vertexSize * 3 * sizeof(float), uiObject.data, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
     glEnableVertexAttribArray(0);
-    glDrawArrays(GL_POLYGON, 0, geometricObject.vertexSize);
+    glDrawArrays(GL_POLYGON, 0, uiObject.vertexSize);
     glBindVertexArray(0);
 }
 
@@ -104,10 +104,10 @@ void Window::updateEvent() {
     }
 }
 
-void Window::setGeometricObjects(const std::vector<GeometricObject>& newGeometricObjects) {
-    geometricObjects.clear();
-    for (GeometricObject newGeometricObject : newGeometricObjects) {
-        geometricObjects.push_back(newGeometricObject);
+void Window::setUiObjects(const std::vector<UiObject>& newUiObjects) {
+    uiObjects.clear();
+    for (UiObject newUiObject : newUiObjects) {
+        uiObjects.push_back(newUiObject);
     }
 }
 

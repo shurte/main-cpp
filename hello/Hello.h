@@ -13,13 +13,13 @@
 namespace hello {
 
 std::string getAppDirectory();
+void write(const std::string& info);
+void clock();
 
 };
 
 class Hello {
     public:
         Hello();
-        ~Hello();
-        void write(const std::string& info) const;
-        void clock() const;
+        ~Hello();  
 };

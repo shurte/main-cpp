@@ -1,6 +1,6 @@
 #pragma once
 
-struct GeometricObject {
+struct UiObject {
     float* data;
     unsigned int vertexSize;
 };

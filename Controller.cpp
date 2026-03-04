@@ -14,50 +14,48 @@ static FrameManager frameManager;
 constexpr int64_t millisecondsInHalfFrame = 1000 / 120;
 constexpr int64_t nanosecondsInHalfFrame = millisecondsInHalfFrame * 1000;
 
-GeometricObject getGeometricObject(const GameObject& gameObject) {
-    GeometricObject geometricObject;
-    geometricObject.vertexSize = 4;
-    geometricObject.data = new float[4 * 3];
-    geometricObject.data[0] = ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f;
-    geometricObject.data[1] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f;
-    geometricObject.data[2] = 0;
+UiObject getUiObject(const GameObject& gameObject) {
+    UiObject uiObject;
+    uiObject.vertexSize = 4;
+    uiObject.data = new float[4 * 3];
+    uiObject.data[0] = ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f;
+    uiObject.data[1] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f;
+    uiObject.data[2] = 0;
 
-    geometricObject.data[3] = (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f;
-    geometricObject.data[4] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f;
-    geometricObject.data[5] = 0;
+    uiObject.data[3] = (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f;
+    uiObject.data[4] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f;
+    uiObject.data[5] = 0;
 
-    geometricObject.data[6] = (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f;
-    geometricObject.data[7] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f;
-    geometricObject.data[8] = 0;
+    uiObject.data[6] = (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f;
+    uiObject.data[7] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f;
+    uiObject.data[8] = 0;
 
-    geometricObject.data[9] = ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f;
-    geometricObject.data[10] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f;
-    geometricObject.data[11] = 0;
+    uiObject.data[9] = ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f;
+    uiObject.data[10] = (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f;
+    uiObject.data[11] = 0;
 
-    return geometricObject;
+    return uiObject;
+}
+
+std::vector<UiObject> getUiObjects(const std::vector<GameObject>& gameObjects) {
+    std::vector<UiObject> uiObjects(gameObjects.size());
+
+    for (const GameObject& gameObject : gameObjects) {
+        UiObject geometricObject = getUiObject(gameObject);
+        uiObjects.push_back(geometricObject);
+    }
+
+    return uiObjects;
 }
 
 void Controller::init() {
-    const Hello hello;
-    // hello.clock();
-
+    hello::clock();
     std::string directory = hello::getAppDirectory();
-    hello.write(directory);
+    hello::write(directory);
 
     game.init();
     window.init();
     frameManager.start();
-}
-
-std::vector<GeometricObject> getGeometricObjects(const std::vector<GameObject>& gameObjects) {
-    std::vector<GeometricObject> geometricObjects(gameObjects.size());
-
-    for (const GameObject& gameObject : gameObjects) {
-        GeometricObject geometricObject = getGeometricObject(gameObject);
-        geometricObjects.push_back(geometricObject);
-    }
-
-    return geometricObjects;
 }
 
 void Controller::runLoop() {
@@ -92,7 +90,7 @@ void Controller::finish() {
 
 void Controller::updateWindow() {
     const std::vector<GameObject>& gameObjects = game.getGameObjects();
-    window.setGeometricObjects(getGeometricObjects(gameObjects));
+    window.setUiObjects(getUiObjects(gameObjects));
     window.update();
 }
 

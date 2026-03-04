@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GeometricObject.h>
+#include <UiObject.h>
 
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
@@ -24,17 +24,17 @@ class Window {
 
         void init();
         void update();
-        void setGeometricObjects(const std::vector<GeometricObject>& geometricObjects);
+        void setUiObjects(const std::vector<UiObject>& geometricObjects);
         size_t getCurrentEvent();
 
     private:
         void updateEvent();
         void redraw();
         void drawObjects();
-        void drawObject(const GeometricObject& geometricObject);
+        void drawObject(const UiObject& geometricObject);
 
     private:
         SDL_Window* window = nullptr;
-        std::vector<GeometricObject> geometricObjects;
+        std::vector<UiObject> uiObjects;
         size_t currentEvent = 0;
 };
