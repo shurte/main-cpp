@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Converter.h>
 #include <Game.h>
 #include <Window.h>
 
@@ -13,7 +14,8 @@ class Controller {
     public:
         Controller() 
             : window(WINDOW_SIZE_H, WINDOW_SIZE_V)
-            , game() {
+            , game()
+            , converter() {
 
         }
 
@@ -34,4 +36,5 @@ class Controller {
     private:
         Window window;
         Game game;
+        Converter converter;
 };
