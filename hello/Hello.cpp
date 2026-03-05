@@ -42,3 +42,13 @@ void hello::clock() {
         std::cout << i << (i == 1 ? " second" : " seconds") << '\n';
     }
 }
+
+void hello::sleep(const uint64_t milliseconds) {
+    #ifdef _WIN32
+    Sleep(milliseconds);
+    #else
+    timespec mySpec, myRem;
+    mySpec.tv_nsec = milliseconds * 1000;
+    nanosleep(&mySpec, &myRem);
+    #endif
+}

@@ -2,6 +2,7 @@
 
 #include <Converter.h>
 #include <Game.h>
+#include <FrameManager.h>
 #include <Window.h>
 
 constexpr int64_t WINDOW_SIZE_H = 1200;
@@ -15,7 +16,8 @@ class Controller {
         Controller() 
             : window(WINDOW_SIZE_H, WINDOW_SIZE_V)
             , game()
-            , converter() {
+            , converter()
+            , frameManager() {
 
         }
 
@@ -37,4 +39,5 @@ class Controller {
         Window window;
         Game game;
         Converter converter;
+        FrameManager frameManager;
 };

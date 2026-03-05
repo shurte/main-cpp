@@ -1,18 +1,8 @@
 #include <Controller.h>
 
 #include <Hello.h>
-#include <FrameManager.h>
 
-#ifdef _WIN32
-#include <wtypes.h>
-#else
-#include <limits.h>
-#include <unistd.h>     //readlink
-#endif
-
-static FrameManager frameManager;
-constexpr int64_t millisecondsInHalfFrame = 1000 / 120;
-constexpr int64_t nanosecondsInHalfFrame = millisecondsInHalfFrame * 1000;
+constexpr uint64_t millisecondsInHalfFrame = 1000 / 120;
 
 void Controller::init() {
     hello::clock();
@@ -30,7 +20,7 @@ void Controller::runLoop() {
     while (isRunning) {
         updateWindow();
 
-        size_t event = window.getCurrentEvent();
+        int8_t event = window.getCurrentEvent();
 
         if (event == windowExit) {
             isRunning = false;
@@ -60,23 +50,13 @@ void Controller::updateWindow() {
     window.update();
 }
 
-void sleep() {
-    #ifdef _WIN32
-    Sleep(millisecondsInHalfFrame);
-    #else
-    timespec mySpec, myRem;
-    mySpec.tv_nsec = nanosecondsInHalfFrame;
-    nanosleep(&mySpec, &myRem);
-    #endif
-}
-
 void Controller::updateGame() {
     int64_t startFrames = frameManager.getFramesFromStart();
     game.update();
     int64_t currentFrames = frameManager.getFramesFromStart();
 
     while (currentFrames - startFrames < 1) {
-        sleep();
+        hello::sleep(millisecondsInHalfFrame);
         currentFrames = frameManager.getFramesFromStart();
     }
 

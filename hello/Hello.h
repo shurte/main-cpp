@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <stdint.h>
 #include <string>
 
 #ifdef _WIN32
@@ -15,6 +16,7 @@ namespace hello {
 std::string getAppDirectory();
 void write(const std::string& info);
 void clock();
+void sleep(const uint64_t milliseconds);
 
 };
 
