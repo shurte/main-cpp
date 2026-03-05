@@ -1,6 +1,6 @@
 #include <Window.h>
 
-Window::Window(size_t sizeHorizontal, size_t sizeVertical) {
+Window::Window(int64_t sizeHorizontal, int64_t sizeVertical) {
     SDL_Init(SDL_INIT_EVERYTHING);
 
     window = SDL_CreateWindow(
@@ -36,6 +36,22 @@ void Window::init() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 }
 
+void Window::update() {
+    redraw();
+    updateEvent();
+}
+
+void Window::setUiObjects(const std::vector<UiObject>& newUiObjects) {
+    uiObjects.clear();
+    for (UiObject newUiObject : newUiObjects) {
+        uiObjects.push_back(newUiObject);
+    }
+}
+
+int8_t Window::getCurrentEvent() {
+    return currentEvent;
+}
+
 void Window::redraw() {
     glClearColor(0.0f, 0.67f, 0.67f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -58,11 +74,6 @@ void Window::drawObject(const UiObject& uiObject) {
     glEnableVertexAttribArray(0);
     glDrawArrays(GL_POLYGON, 0, uiObject.vertexSize);
     glBindVertexArray(0);
-}
-
-void Window::update() {
-    redraw();
-    updateEvent();
 }
 
 size_t getKeyEvent(const SDL_Event& event) {
@@ -102,15 +113,4 @@ void Window::updateEvent() {
             currentEvent = returnCode;
         }
     }
-}
-
-void Window::setUiObjects(const std::vector<UiObject>& newUiObjects) {
-    uiObjects.clear();
-    for (UiObject newUiObject : newUiObjects) {
-        uiObjects.push_back(newUiObject);
-    }
-}
-
-size_t Window::getCurrentEvent() {
-    return currentEvent;
 }

@@ -19,13 +19,13 @@ constexpr int8_t windowExit = 128;
 
 class Window {
     public:
-        Window(size_t sizeHorizontal, size_t sizeVertical);
+        Window(int64_t sizeHorizontal, int64_t sizeVertical);
         ~Window();
 
         void init();
         void update();
         void setUiObjects(const std::vector<UiObject>& geometricObjects);
-        size_t getCurrentEvent();
+        int8_t getCurrentEvent();
 
     private:
         void updateEvent();
@@ -36,5 +36,5 @@ class Window {
     private:
         SDL_Window* window = nullptr;
         std::vector<UiObject> uiObjects;
-        size_t currentEvent = 0;
+        int8_t currentEvent = 0;
 };
