@@ -41,9 +41,9 @@ void Window::update() {
     updateEvent();
 }
 
-void Window::setUiObjects(const std::vector<UiObject>& newUiObjects) {
+void Window::setUiObjects(const std::vector<std::shared_ptr<UiObject>>& newUiObjects) {
     uiObjects.clear();
-    for (UiObject newUiObject : newUiObjects) {
+    for (std::shared_ptr<UiObject> newUiObject : newUiObjects) {
         uiObjects.push_back(newUiObject);
     }
 }
@@ -62,17 +62,17 @@ void Window::redraw() {
 }
 
 void Window::drawObjects() {
-    for (const UiObject& uiObject : uiObjects) {
+    for (std::shared_ptr<UiObject> uiObject : uiObjects) {
         drawObject(uiObject);
     }
 }
 
-void Window::drawObject(const UiObject& uiObject) {
+void Window::drawObject(std::shared_ptr<UiObject> uiObject) {
     glBindVertexArray(VAO[0]);
-    glBufferData(GL_ARRAY_BUFFER, uiObject.vertexSize * 3 * sizeof(float), uiObject.data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, uiObject->getVertexSize() * 3 * sizeof(float), uiObject->getData(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
     glEnableVertexAttribArray(0);
-    glDrawArrays(GL_POLYGON, 0, uiObject.vertexSize);
+    glDrawArrays(GL_POLYGON, 0, uiObject->getVertexSize());
     glBindVertexArray(0);
 }
 

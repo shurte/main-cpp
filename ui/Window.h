@@ -7,6 +7,7 @@
 
 #include <GL/glew.h>
 
+#include <memory>
 #include <vector>
 
 constexpr int8_t windowMouseDown = 1;
@@ -24,17 +25,17 @@ class Window {
 
         void init();
         void update();
-        void setUiObjects(const std::vector<UiObject>& geometricObjects);
+        void setUiObjects(const std::vector<std::shared_ptr<UiObject>>& geometricObjects);
         int8_t getCurrentEvent();
 
     private:
         void updateEvent();
         void redraw();
         void drawObjects();
-        void drawObject(const UiObject& geometricObject);
+        void drawObject(std::shared_ptr<UiObject> uiObject);
 
     private:
         SDL_Window* window = nullptr;
-        std::vector<UiObject> uiObjects;
+        std::vector<std::shared_ptr<UiObject>> uiObjects;
         int8_t currentEvent = 0;
 };
