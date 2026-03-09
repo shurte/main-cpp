@@ -25,13 +25,13 @@ void Controller::runLoop() {
         if (event == windowExit) {
             isRunning = false;
         } else if (event == windowMoveUp) {
-            game.setCurrentEvent(MOVE_UP);
+            game.setCurrentEvent(gameMoveUp);
         } else if (event == windowMoveDown) {
-            game.setCurrentEvent(MOVE_DOWN);
+            game.setCurrentEvent(gameMoveDown);
         } else if (event == windowMoveLeft) {
-            game.setCurrentEvent(MOVE_LEFT);
+            game.setCurrentEvent(gameMoveLeft);
         } else if (event == windowMoveRight) {
-            game.setCurrentEvent(MOVE_RIGHT);
+            game.setCurrentEvent(gameMoveRight);
         } else {
             game.setCurrentEvent(0);
         }

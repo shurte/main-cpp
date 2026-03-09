@@ -90,16 +90,16 @@ void updateGameObject(GameObject& gameObject, unsigned int gameEvent) {
     }
 
     switch (gameEvent) {
-        case MOVE_UP:
+        case gameMoveUp:
             moveGameObjectUp(gameObject);
             break;
-        case MOVE_DOWN:
+        case gameMoveDown:
             moveGameObjectDown(gameObject);
             break;
-        case MOVE_LEFT:
+        case gameMoveLeft:
             moveGameObjectLeft(gameObject);
             break;
-        case MOVE_RIGHT:
+        case gameMoveRight:
             moveGameObjectRight(gameObject);
             break;
     }

@@ -24,7 +24,6 @@ std::shared_ptr<UiObject> Converter::getUiObject(const GameObject& gameObject) c
 }
 
 std::vector<std::shared_ptr<UiObject>> Converter::getUiObjects(const std::vector<GameObject>& gameObjects) const {
-    // std::vector<std::shared_ptr<UiObject>> uiObjects(gameObjects.size());
     std::vector<std::shared_ptr<UiObject>> uiObjects;
     uiObjects.reserve(gameObjects.size());
 

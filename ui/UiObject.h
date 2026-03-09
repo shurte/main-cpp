@@ -1,11 +1,12 @@
 #pragma once
 
+#include "Hello.h"
+
 class UiObject {
     public:
         UiObject()
             : data(new float[4 * 3])
             , vertexSize(4) {
-
         }
 
         UiObject(const UiObject& rhs)
