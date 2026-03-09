@@ -25,17 +25,17 @@ class Window {
 
         void init();
         void update();
-        void setUiObjects(const std::vector<std::shared_ptr<UiObject>>& geometricObjects);
+        void setUiObjects(const UiObjectPtrVector& geometricObjects);
         int8_t getCurrentEvent();
 
     private:
         void updateEvent();
         void redraw();
         void drawObjects();
-        void drawObject(std::shared_ptr<UiObject> uiObject);
+        void drawObject(UiObjectPtr uiObject);
 
     private:
         SDL_Window* window = nullptr;
-        std::vector<std::shared_ptr<UiObject>> uiObjects;
+        UiObjectPtrVector uiObjects;
         int8_t currentEvent = 0;
 };

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Hello.h"
+#include <memory>
+#include <vector>
 
 class UiObject {
     public:
@@ -48,3 +49,6 @@ class UiObject {
         float* data;
         unsigned int vertexSize;
 };
+
+typedef std::shared_ptr<UiObject> UiObjectPtr;
+typedef std::vector<UiObjectPtr> UiObjectPtrVector; 

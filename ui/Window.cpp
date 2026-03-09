@@ -41,9 +41,9 @@ void Window::update() {
     updateEvent();
 }
 
-void Window::setUiObjects(const std::vector<std::shared_ptr<UiObject>>& newUiObjects) {
+void Window::setUiObjects(const UiObjectPtrVector& newUiObjects) {
     uiObjects.clear();
-    for (std::shared_ptr<UiObject> newUiObject : newUiObjects) {
+    for (UiObjectPtr newUiObject : newUiObjects) {
         uiObjects.push_back(newUiObject);
     }
 }
@@ -62,12 +62,12 @@ void Window::redraw() {
 }
 
 void Window::drawObjects() {
-    for (std::shared_ptr<UiObject> uiObject : uiObjects) {
+    for (UiObjectPtr uiObject : uiObjects) {
         drawObject(uiObject);
     }
 }
 
-void Window::drawObject(std::shared_ptr<UiObject> uiObject) {
+void Window::drawObject(UiObjectPtr uiObject) {
     glBindVertexArray(VAO[0]);
     glBufferData(GL_ARRAY_BUFFER, uiObject->getVertexSize() * 3 * sizeof(float), uiObject->getData(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
