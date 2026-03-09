@@ -3,28 +3,19 @@
 #include <memory>
 #include <vector>
 
+constexpr unsigned int defaultVertexSize = 4;
+constexpr unsigned int numberOfCoordinates = 3;
+
 class UiObject {
     public:
         UiObject()
-            : data(new float[4 * 3])
-            , vertexSize(4) {
+            : vertexSize(defaultVertexSize)
+            , data(new float[defaultVertexSize * numberOfCoordinates]) {
         }
 
-        UiObject(const UiObject& rhs)
-            : data(new float[4 * 3])
-            , vertexSize(4) {
-                data[0] = rhs.data[0];
-                data[1] = rhs.data[1];
-                data[2] = rhs.data[2];
-                data[3] = rhs.data[3];
-                data[4] = rhs.data[4];
-                data[5] = rhs.data[5];
-                data[6] = rhs.data[6];
-                data[7] = rhs.data[7];
-                data[8] = rhs.data[8];
-                data[9] = rhs.data[9];
-                data[10] = rhs.data[10];
-                data[11] = rhs.data[11];
+        UiObject(unsigned int vertexSize)
+            : vertexSize(vertexSize)
+            , data(new float[vertexSize * numberOfCoordinates]) {
         }
 
         ~UiObject() {
@@ -33,21 +24,34 @@ class UiObject {
             }
         }
 
-        void setData(unsigned int dataIndex, float data) {
-            this->data[dataIndex] = data;
+        void setXValue(unsigned int vertexNumber, float value) {
+            setData(vertexNumber * numberOfCoordinates, value);
+        }
+
+        void setYValue(unsigned int vertexNumber, float value) {
+            setData(vertexNumber * numberOfCoordinates + 1, value);
+        }
+
+        void setZValue(unsigned int vertexNumber, float value) {
+            setData(vertexNumber * numberOfCoordinates + 2, value);
         }
 
         unsigned int getVertexSize() const {
             return vertexSize;
         }
 
-        float* getData() {
+        const float* const getData() {
             return data;
         }
 
-    public:
-        float* data;
+    private:
+        void setData(unsigned int dataIndex, float data) {
+            this->data[dataIndex] = data;
+        }
+
+    private:
         unsigned int vertexSize;
+        float* data;
 };
 
 typedef std::shared_ptr<UiObject> UiObjectPtr;

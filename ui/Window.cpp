@@ -69,7 +69,7 @@ void Window::drawObjects() {
 
 void Window::drawObject(UiObjectPtr uiObject) {
     glBindVertexArray(VAO[0]);
-    glBufferData(GL_ARRAY_BUFFER, uiObject->getVertexSize() * 3 * sizeof(float), uiObject->getData(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, uiObject->getVertexSize() * numberOfCoordinates * sizeof(float), uiObject->getData(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
     glEnableVertexAttribArray(0);
     glDrawArrays(GL_POLYGON, 0, uiObject->getVertexSize());

@@ -4,21 +4,21 @@
 
 UiObjectPtr Converter::getUiObject(const GameObject& gameObject) const {
     UiObjectPtr uiObject(new UiObject);
-    uiObject->setData(0, ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f);
-    uiObject->setData(1, (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f);
-    uiObject->setData(2, 0);
+    uiObject->setXValue(0, ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f);
+    uiObject->setYValue(0, (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f);
+    uiObject->setZValue(0, 0);
 
-    uiObject->setData(3, (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f);
-    uiObject->setData(4, (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f);
-    uiObject->setData(5, 0);
+    uiObject->setXValue(1, (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f);
+    uiObject->setYValue(1, (( (float) WINDOW_SIZE_V - gameObject.verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f);
+    uiObject->setZValue(1, 0);
 
-    uiObject->setData(6, (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f);
-    uiObject->setData(7, (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f);
-    uiObject->setData(8, 0);
+    uiObject->setXValue(2, (( (float) gameObject.horizontalPosition + gameObject.horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f);
+    uiObject->setYValue(2, (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f);
+    uiObject->setZValue(2, 0);
 
-    uiObject->setData(9, ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f);
-    uiObject->setData(10, (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f);
-    uiObject->setData(11, 0);
+    uiObject->setXValue(3, ( (float) gameObject.horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f);
+    uiObject->setYValue(3, (( (float) WINDOW_SIZE_V - gameObject.verticalPosition - gameObject.verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f);
+    uiObject->setZValue(3, 0);
 
     return uiObject;
 }
