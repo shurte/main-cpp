@@ -91,40 +91,29 @@ void updateGameObject(std::shared_ptr<GameObject> gameObject, unsigned int gameE
         return;
     }
 
-    switch (gameEvent) {
-        case gameMoveUp:
-            moveGameObjectUp(gameObject);
-            break;
-        case gameMoveDown:
-            moveGameObjectDown(gameObject);
-            break;
-        case gameMoveLeft:
-            moveGameObjectLeft(gameObject);
-            break;
-        case gameMoveRight:
-            moveGameObjectRight(gameObject);
-            break;
+    if ((gameObject->horizontalSize == 100) && (gameObject->verticalSize == 100)) {
+        switch (gameEvent) {
+            case gameMoveUp:
+                moveGameObjectUp(gameObject);
+                break;
+            case gameMoveDown:
+                moveGameObjectDown(gameObject);
+                break;
+            case gameMoveLeft:
+                moveGameObjectLeft(gameObject);
+                break;
+            case gameMoveRight:
+                moveGameObjectRight(gameObject);
+                break;
+        }
+
+        return;
     }
 }
 
 void Game::init() {
-    std::shared_ptr<GameObject> gameRectangle(new GameObject);
-    gameRectangle->horizontalPosition = 100;
-    gameRectangle->verticalPosition = 100;
-    gameRectangle->horizontalSize = 100;
-    gameRectangle->verticalSize = 100;
-
-    gameObjects.push_back(gameRectangle);
-
-    std::shared_ptr<GameObject> gameRectangleWithVelocity(new GameObject);
-    gameRectangleWithVelocity->horizontalPosition = 600;
-    gameRectangleWithVelocity->verticalPosition = 100;
-    gameRectangleWithVelocity->horizontalSize = 100;
-    gameRectangleWithVelocity->verticalSize = 100;
-    gameRectangleWithVelocity->horizontalVelocity = 10;
-    gameRectangleWithVelocity->verticalVelocity = 10;
-
-    gameObjects.push_back(gameRectangleWithVelocity);
+    std::vector<std::shared_ptr<GameObject>> gameObjects = gameDataProvider.getGameObjects();
+    this->gameObjects = gameObjects;
 }
 
 void Game::update() {

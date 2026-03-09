@@ -1,5 +1,6 @@
 #pragma once
 
+#include <GameDataProvider.h>
 #include <GameObject.h>
 
 #include <memory>
@@ -24,4 +25,5 @@ class Game {
     private:
         unsigned int currentEvent;
         std::vector<std::shared_ptr<GameObject>> gameObjects;
+        GameDataProvider gameDataProvider;
 };
