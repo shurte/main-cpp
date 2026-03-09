@@ -45,7 +45,7 @@ void Controller::finish() {
 }
 
 void Controller::updateWindow() {
-    const std::vector<GameObject>& gameObjects = game.getGameObjects();
+    const std::vector<std::shared_ptr<GameObject>>& gameObjects = game.getGameObjects();
     window.setUiObjects(converter.getUiObjects(gameObjects));
     window.update();
 }

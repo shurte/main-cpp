@@ -2,6 +2,7 @@
 
 #include <GameObject.h>
 
+#include <memory>
 #include <vector>
 
 constexpr size_t gameMoveUp = 1;
@@ -18,9 +19,9 @@ class Game {
         void init();
         void update();
         void setCurrentEvent(size_t newEvent);
-        std::vector<GameObject> getGameObjects();
+        std::vector<std::shared_ptr<GameObject>> getGameObjects();
 
     private:
         unsigned int currentEvent;
-        std::vector<GameObject> gameObjects;
+        std::vector<std::shared_ptr<GameObject>> gameObjects;
 };
