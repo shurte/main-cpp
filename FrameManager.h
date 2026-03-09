@@ -11,16 +11,6 @@ class FrameManager {
             startTimePoint = system_clock::now();
         }
 
-        void printCurrentTime() {
-            time_t time = system_clock::to_time_t(system_clock::now());
-            std::cout << std::ctime(&time);
-        }
-
-        void printStartTime() {
-            time_t time = system_clock::to_time_t(startTimePoint);
-            std::cout << std::ctime(&time) << '\n';
-        }
-
         int64_t getFramesFromStart() {
             seconds startSeconds = duration_cast<seconds>(startTimePoint.time_since_epoch());
             system_clock::time_point currentTimePoint = system_clock::now();
