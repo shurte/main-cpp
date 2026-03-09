@@ -23,6 +23,14 @@ class Game {
         std::vector<std::shared_ptr<GameObject>> getGameObjects();
 
     private:
+        void moveGameObjectUp(std::shared_ptr<GameObject> gameObject);
+        void moveGameObjectDown(std::shared_ptr<GameObject> gameObject);
+        void moveGameObjectLeft(std::shared_ptr<GameObject> gameObject);
+        void moveGameObjectRight(std::shared_ptr<GameObject> gameObject);
+        void moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject);
+        void updateGameObject(std::shared_ptr<GameObject> gameObject, unsigned int gameEvent);
+
+    private:
         unsigned int currentEvent;
         std::vector<std::shared_ptr<GameObject>> gameObjects;
         GameDataProvider gameDataProvider;
