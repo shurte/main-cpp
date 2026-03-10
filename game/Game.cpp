@@ -3,12 +3,13 @@
 #include <GameObject.h>
 
 #include <memory>
+#include <stdexcept>
 
 void Game::moveGameObjectUp(std::shared_ptr<GameObject> gameObject) {
-    static unsigned int topBorder = 50;
-    static unsigned int stepSize = 1;
+    static int topBorder = 50;
+    static int stepSize = 1;
 
-    unsigned int newVerticalPosition = gameObject->verticalPosition - stepSize;
+    int newVerticalPosition = gameObject->verticalPosition - stepSize;
 
     if (newVerticalPosition > topBorder) {
         gameObject->verticalPosition = newVerticalPosition;
@@ -16,10 +17,10 @@ void Game::moveGameObjectUp(std::shared_ptr<GameObject> gameObject) {
 }
 
 void Game::moveGameObjectDown(std::shared_ptr<GameObject> gameObject) {
-    static unsigned int bottomBorder = 550;
-    static unsigned int stepSize = 1;
+    static int bottomBorder = 550;
+    static int stepSize = 1;
 
-    unsigned int newVerticalPosition = gameObject->verticalPosition + stepSize;
+    int newVerticalPosition = gameObject->verticalPosition + stepSize;
 
     if (newVerticalPosition + gameObject->verticalSize < bottomBorder) {
         gameObject->verticalPosition = newVerticalPosition;
@@ -27,10 +28,10 @@ void Game::moveGameObjectDown(std::shared_ptr<GameObject> gameObject) {
 }
 
 void Game::moveGameObjectLeft(std::shared_ptr<GameObject> gameObject) {
-    static unsigned int leftBorder = 50;
-    static unsigned int stepSize = 1;
+    static int leftBorder = 50;
+    static int stepSize = 1;
 
-    unsigned int newHorizontalPosition = gameObject->horizontalPosition - stepSize;
+    int newHorizontalPosition = gameObject->horizontalPosition - stepSize;
 
     if (newHorizontalPosition > leftBorder) {
         gameObject->horizontalPosition = newHorizontalPosition;
@@ -38,10 +39,10 @@ void Game::moveGameObjectLeft(std::shared_ptr<GameObject> gameObject) {
 }
 
 void Game::moveGameObjectRight(std::shared_ptr<GameObject> gameObject) {
-    static unsigned int rightBorder = 1150;
-    static unsigned int stepSize = 1;
+    static int rightBorder = 1150;
+    static int stepSize = 1;
 
-    unsigned int newHorizontalPosition = gameObject->horizontalPosition + stepSize;
+    int newHorizontalPosition = gameObject->horizontalPosition + stepSize;
 
     if (newHorizontalPosition + gameObject->horizontalSize < rightBorder) {
         gameObject->horizontalPosition = newHorizontalPosition;
@@ -53,15 +54,18 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
         return;
     }
 
-    static unsigned int topBorder = 50;
-    static unsigned int bottomBorder = 550;
-    static unsigned int leftBorder = 50;
-    static unsigned int rightBorder = 1150;
+    static int topBorder = 50;
+    static int bottomBorder = 550;
+    static int leftBorder = 50;
+    static int rightBorder = 1150;
 
-    static unsigned int stepSize = 1;
+    static int stepSize = 1;
 
-    unsigned int newHorizontal = gameObject->horizontalPosition + stepSize * gameObject->horizontalVelocity;
-    unsigned int newVertical = gameObject->verticalPosition + stepSize * gameObject->verticalVelocity;
+    int newHorizontal = gameObject->horizontalPosition + stepSize * gameObject->horizontalVelocity;
+    int newVertical = gameObject->verticalPosition + stepSize * gameObject->verticalVelocity;
+
+    bool isHorizontalChanged = false;
+    bool isVerticalChanged = false;
 
     for (const std::shared_ptr<GameObject>& otherGameObject : getGameObjects()) {
         if (gameObject->horizontalPosition == otherGameObject->horizontalPosition
@@ -77,8 +81,10 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
         leftBorder = otherGameObject->horizontalPosition;
 
         bool isVerticalAlignment 
-            = (gameObject->verticalPosition >= otherGameObject->verticalPosition && (gameObject->verticalPosition + gameObject->verticalSize) > otherGameObject->verticalPosition)
-            || (gameObject->verticalPosition <= (otherGameObject->verticalPosition + otherGameObject->verticalSize) && (gameObject->verticalPosition + gameObject->verticalSize) > (otherGameObject->verticalPosition + otherGameObject->verticalSize)); 
+            = (gameObject->verticalPosition >= otherGameObject->verticalPosition && gameObject->verticalPosition <= (otherGameObject->verticalPosition + otherGameObject->verticalSize))
+            || ((gameObject->verticalPosition + gameObject->verticalSize) >= otherGameObject->verticalPosition && (gameObject->verticalPosition + gameObject->verticalSize) <= (otherGameObject->verticalPosition + otherGameObject->verticalSize))
+            || (gameObject->verticalPosition <= otherGameObject->verticalPosition && (gameObject->verticalPosition + gameObject->verticalSize) >= otherGameObject->verticalPosition)
+            || (gameObject->verticalPosition <= (otherGameObject->verticalPosition + otherGameObject->verticalSize) && (gameObject->verticalPosition + gameObject->verticalSize) >= (otherGameObject->verticalPosition + otherGameObject->verticalSize)); 
 
         bool isHorizontalAlignment 
             = (gameObject->horizontalPosition >= otherGameObject->horizontalPosition && gameObject->horizontalPosition <= otherGameObject->horizontalPosition + otherGameObject->horizontalSize)
@@ -90,9 +96,10 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
         if (isVerticalAlignment && (gameObject->horizontalVelocity < 0)) {
             if (newHorizontal > rightBorder) {
                 // gameObject->horizontalPosition = newHorizontal;
-            } else if ((newHorizontal <= rightBorder) && ((newHorizontal + gameObject->horizontalSize) > rightBorder)) {
+            } else if ((newHorizontal <= rightBorder) && ((newHorizontal + gameObject->horizontalSize) > rightBorder) && !isHorizontalChanged) {
                 gameObject->horizontalVelocity = -gameObject->horizontalVelocity;
                 newHorizontal = rightBorder;
+                isHorizontalChanged = true;
             }
         }
 
@@ -100,9 +107,10 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
         if (isVerticalAlignment && (gameObject->horizontalVelocity > 0)) {
             if (newHorizontal + gameObject->horizontalSize < leftBorder) {
                 // newHorizontal = newHorizontal;
-            } else if ((newHorizontal + gameObject->horizontalSize >= leftBorder) && (newHorizontal < leftBorder)) {
+            } else if ((newHorizontal + gameObject->horizontalSize >= leftBorder) && (newHorizontal < leftBorder) && !isHorizontalChanged) {
                 gameObject->horizontalVelocity = -gameObject->horizontalVelocity;
                 newHorizontal = leftBorder - gameObject->horizontalSize;
+                isHorizontalChanged = true;
             }
         }
 
@@ -110,9 +118,10 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
         if (isHorizontalAlignment && gameObject->verticalVelocity < 0) {
             if (newVertical < bottomBorder) {
                 // gameObject->verticalPosition = newVertical;
-            } else if ((newVertical <= bottomBorder) && (newVertical + gameObject->verticalSize > bottomBorder)) {
+            } else if ((newVertical <= bottomBorder) && (newVertical + gameObject->verticalSize > bottomBorder) && !isVerticalChanged) {
                 gameObject->verticalVelocity = -gameObject->verticalVelocity;
                 newVertical = bottomBorder;
+                isVerticalChanged = true;
             }
         }
 
@@ -120,15 +129,21 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
         if (isHorizontalAlignment && gameObject->verticalVelocity > 0) {
             if (newVertical + gameObject->verticalSize < topBorder) {
                 // gameObject->verticalPosition = newVertical;
-            } else if ((newVertical + gameObject->verticalSize >= topBorder) && (newVertical < topBorder)) {
+            } else if ((newVertical + gameObject->verticalSize >= topBorder) && (newVertical < topBorder) && !isVerticalChanged) {
                 gameObject->verticalVelocity = -gameObject->verticalVelocity;
                 newVertical = topBorder - gameObject->verticalSize;
+                isVerticalChanged = true;
             }
         }
     }
 
     gameObject->horizontalPosition = newHorizontal;
     gameObject->verticalPosition = newVertical;
+
+    if (gameObject->horizontalPosition < 0 || gameObject->horizontalPosition > 1200 
+        || gameObject->verticalPosition < 0 || gameObject->verticalPosition > 600 ) {
+            throw std::runtime_error("Wrong position.");
+        }
 }
 
 void Game::updateGameObject(std::shared_ptr<GameObject> gameObject, unsigned int gameEvent) {
