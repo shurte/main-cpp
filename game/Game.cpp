@@ -54,91 +54,85 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
         return;
     }
 
-    static int topBorder = 50;
-    static int bottomBorder = 550;
-    static int leftBorder = 50;
-    static int rightBorder = 1150;
-
     static int stepSize = 1;
 
-    int newHorizontal = gameObject->horizontalPosition + stepSize * gameObject->horizontalVelocity;
-    int newVertical = gameObject->verticalPosition + stepSize * gameObject->verticalVelocity;
+    int topObject = gameObject->verticalPosition;
+    int bottomObject = gameObject->verticalPosition + gameObject->verticalSize;
+    int leftObject = gameObject->horizontalPosition;
+    int rightObject = gameObject->horizontalPosition + gameObject->horizontalSize;
+    
+    int newTopObject = topObject + stepSize * gameObject->verticalVelocity;
+    int newbottomObject = bottomObject + stepSize * gameObject->verticalVelocity;
+    int newLeftObject = leftObject + stepSize * gameObject->horizontalVelocity;
+    int newRightObject = rightObject + stepSize * gameObject->horizontalVelocity;
 
     bool isHorizontalChanged = false;
     bool isVerticalChanged = false;
 
     for (const std::shared_ptr<GameObject>& otherGameObject : getGameObjects()) {
-        if (gameObject->horizontalPosition == otherGameObject->horizontalPosition
+        bool isTheSameObject = gameObject->horizontalPosition == otherGameObject->horizontalPosition
             && gameObject->verticalPosition == otherGameObject->verticalPosition
             && gameObject->verticalSize == otherGameObject->verticalSize
-            && gameObject->horizontalSize == otherGameObject->horizontalSize) {
-                continue;
+            && gameObject->horizontalSize == otherGameObject->horizontalSize;
+
+        if (isTheSameObject) {
+            continue;
         }
 
-        topBorder = otherGameObject->verticalPosition;
-        bottomBorder = otherGameObject->verticalPosition + otherGameObject->verticalSize;
-        rightBorder = otherGameObject->horizontalPosition + otherGameObject->horizontalSize;
-        leftBorder = otherGameObject->horizontalPosition;
+        int topBorder = otherGameObject->verticalPosition;
+        int bottomBorder = otherGameObject->verticalPosition + otherGameObject->verticalSize;
+        int rightBorder = otherGameObject->horizontalPosition + otherGameObject->horizontalSize;
+        int leftBorder = otherGameObject->horizontalPosition;
 
         bool isVerticalAlignment 
-            = (gameObject->verticalPosition >= otherGameObject->verticalPosition && gameObject->verticalPosition <= (otherGameObject->verticalPosition + otherGameObject->verticalSize))
-            || ((gameObject->verticalPosition + gameObject->verticalSize) >= otherGameObject->verticalPosition && (gameObject->verticalPosition + gameObject->verticalSize) <= (otherGameObject->verticalPosition + otherGameObject->verticalSize))
-            || (gameObject->verticalPosition <= otherGameObject->verticalPosition && (gameObject->verticalPosition + gameObject->verticalSize) >= otherGameObject->verticalPosition)
-            || (gameObject->verticalPosition <= (otherGameObject->verticalPosition + otherGameObject->verticalSize) && (gameObject->verticalPosition + gameObject->verticalSize) >= (otherGameObject->verticalPosition + otherGameObject->verticalSize)); 
+            = topObject <= topBorder && bottomObject >= topBorder
+            || topObject <= bottomBorder && bottomObject >= bottomBorder
+            || topObject >= topBorder && topObject <= bottomBorder;
 
         bool isHorizontalAlignment 
-            = (gameObject->horizontalPosition >= otherGameObject->horizontalPosition && gameObject->horizontalPosition <= otherGameObject->horizontalPosition + otherGameObject->horizontalSize)
-            || ((gameObject->horizontalPosition + gameObject->horizontalSize) >= otherGameObject->horizontalPosition && (gameObject->horizontalPosition + gameObject->horizontalSize) <= (otherGameObject->horizontalPosition + otherGameObject->horizontalSize))
-            || (gameObject->horizontalPosition <= otherGameObject->horizontalPosition && (gameObject->horizontalPosition + gameObject->horizontalSize) >= otherGameObject->horizontalPosition)
-            || (gameObject->horizontalPosition <= (otherGameObject->horizontalPosition + otherGameObject->horizontalSize) && (gameObject->horizontalPosition + gameObject->horizontalSize) >= (otherGameObject->horizontalPosition + otherGameObject->horizontalSize)); 
+            = leftObject <= leftBorder && rightObject >= leftBorder
+            || leftObject <= rightBorder && rightObject >= rightBorder
+            || leftObject >= leftBorder && leftObject <= rightBorder; 
 
         // check left collision
         if (isVerticalAlignment && (gameObject->horizontalVelocity < 0)) {
-            if (newHorizontal > rightBorder) {
-                // gameObject->horizontalPosition = newHorizontal;
-            } else if ((newHorizontal <= rightBorder) && ((newHorizontal + gameObject->horizontalSize) > rightBorder) && !isHorizontalChanged) {
-                gameObject->horizontalVelocity = -gameObject->horizontalVelocity;
-                newHorizontal = rightBorder;
+            if (leftObject >= rightBorder && newLeftObject < rightBorder && rightObject > rightBorder && !isHorizontalChanged) {
                 isHorizontalChanged = true;
             }
         }
 
         // check right collision
         if (isVerticalAlignment && (gameObject->horizontalVelocity > 0)) {
-            if (newHorizontal + gameObject->horizontalSize < leftBorder) {
-                // newHorizontal = newHorizontal;
-            } else if ((newHorizontal + gameObject->horizontalSize >= leftBorder) && (newHorizontal < leftBorder) && !isHorizontalChanged) {
-                gameObject->horizontalVelocity = -gameObject->horizontalVelocity;
-                newHorizontal = leftBorder - gameObject->horizontalSize;
+            if (rightObject <= leftBorder && newRightObject > leftBorder && leftObject < leftBorder && !isHorizontalChanged) {
                 isHorizontalChanged = true;
             }
         }
 
         // check top collision
         if (isHorizontalAlignment && gameObject->verticalVelocity < 0) {
-            if (newVertical < bottomBorder) {
-                // gameObject->verticalPosition = newVertical;
-            } else if ((newVertical <= bottomBorder) && (newVertical + gameObject->verticalSize > bottomBorder) && !isVerticalChanged) {
-                gameObject->verticalVelocity = -gameObject->verticalVelocity;
-                newVertical = bottomBorder;
+            if (topObject >= bottomBorder && newTopObject < bottomBorder && bottomObject > bottomBorder && !isVerticalChanged) {
                 isVerticalChanged = true;
             }
         }
 
         // check bottom collision
         if (isHorizontalAlignment && gameObject->verticalVelocity > 0) {
-            if (newVertical + gameObject->verticalSize < topBorder) {
-                // gameObject->verticalPosition = newVertical;
-            } else if ((newVertical + gameObject->verticalSize >= topBorder) && (newVertical < topBorder) && !isVerticalChanged) {
-                gameObject->verticalVelocity = -gameObject->verticalVelocity;
-                newVertical = topBorder - gameObject->verticalSize;
+            if (bottomObject <= topBorder && newbottomObject > topBorder && topObject < topBorder && !isVerticalChanged) {
                 isVerticalChanged = true;
             }
         }
     }
 
-    gameObject->horizontalPosition = newHorizontal;
-    gameObject->verticalPosition = newVertical;
+    if (isHorizontalChanged) {
+        gameObject->horizontalVelocity = -gameObject->horizontalVelocity;
+    }
+
+    if (isVerticalChanged) {
+        gameObject->verticalVelocity = -gameObject->verticalVelocity;
+    }
+
+    gameObject->horizontalPosition = gameObject->horizontalPosition + stepSize * gameObject->horizontalVelocity;
+    gameObject->verticalPosition = gameObject->verticalPosition + stepSize * gameObject->verticalVelocity; 
 
     if (gameObject->horizontalPosition < 0 || gameObject->horizontalPosition > 1200 
         || gameObject->verticalPosition < 0 || gameObject->verticalPosition > 600 ) {
