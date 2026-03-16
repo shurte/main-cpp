@@ -62,7 +62,7 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
     int rightObject = gameObject->horizontalPosition + gameObject->horizontalSize;
     
     int newTopObject = topObject + stepSize * gameObject->verticalVelocity;
-    int newbottomObject = bottomObject + stepSize * gameObject->verticalVelocity;
+    int newBottomObject = bottomObject + stepSize * gameObject->verticalVelocity;
     int newLeftObject = leftObject + stepSize * gameObject->horizontalVelocity;
     int newRightObject = rightObject + stepSize * gameObject->horizontalVelocity;
 
@@ -70,10 +70,10 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
     bool isVerticalChanged = false;
 
     for (const std::shared_ptr<GameObject>& otherGameObject : getGameObjects()) {
-        bool isTheSameObject = gameObject->horizontalPosition == otherGameObject->horizontalPosition
-            && gameObject->verticalPosition == otherGameObject->verticalPosition
-            && gameObject->verticalSize == otherGameObject->verticalSize
-            && gameObject->horizontalSize == otherGameObject->horizontalSize;
+        bool isTheSameObject = (gameObject->horizontalPosition == otherGameObject->horizontalPosition)
+            && (gameObject->verticalPosition == otherGameObject->verticalPosition)
+            && (gameObject->verticalSize == otherGameObject->verticalSize)
+            && (gameObject->horizontalSize == otherGameObject->horizontalSize);
 
         if (isTheSameObject) {
             continue;
@@ -85,39 +85,45 @@ void Game::moveGameObjectWithVelocity(std::shared_ptr<GameObject> gameObject) {
         int leftBorder = otherGameObject->horizontalPosition;
 
         bool isVerticalAlignment 
-            = topObject <= topBorder && bottomObject >= topBorder
-            || topObject <= bottomBorder && bottomObject >= bottomBorder
-            || topObject >= topBorder && topObject <= bottomBorder;
+            = ((topObject <= topBorder) && (bottomObject >= topBorder))
+            || ((topObject <= bottomBorder) && (bottomObject >= bottomBorder))
+            || ((topObject >= topBorder) && (topObject <= bottomBorder))
+            || ((newTopObject <= topBorder) && (newBottomObject >= topBorder))
+            || ((newTopObject <= bottomBorder) && (newBottomObject >= bottomBorder))
+            || ((newTopObject >= topBorder) && (newTopObject <= bottomBorder));
 
         bool isHorizontalAlignment 
-            = leftObject <= leftBorder && rightObject >= leftBorder
-            || leftObject <= rightBorder && rightObject >= rightBorder
-            || leftObject >= leftBorder && leftObject <= rightBorder; 
+            = ((leftObject <= leftBorder) && (rightObject >= leftBorder))
+            || ((leftObject <= rightBorder) && (rightObject >= rightBorder))
+            || ((leftObject >= leftBorder) && (leftObject <= rightBorder))
+            || ((newLeftObject <= leftBorder) && (newRightObject >= leftBorder))
+            || ((newLeftObject <= rightBorder) && (newRightObject >= rightBorder))
+            || ((newLeftObject >= leftBorder) && (newLeftObject <= rightBorder)); 
 
         // check left collision
         if (isVerticalAlignment && (gameObject->horizontalVelocity < 0)) {
-            if (leftObject >= rightBorder && newLeftObject < rightBorder && rightObject > rightBorder && !isHorizontalChanged) {
+            if ((leftObject >= rightBorder) && (newLeftObject < rightBorder) /* && (rightObject > rightBorder)*/ && !isHorizontalChanged) {
                 isHorizontalChanged = true;
             }
         }
 
         // check right collision
         if (isVerticalAlignment && (gameObject->horizontalVelocity > 0)) {
-            if (rightObject <= leftBorder && newRightObject > leftBorder && leftObject < leftBorder && !isHorizontalChanged) {
+            if ((rightObject <= leftBorder) && (newRightObject > leftBorder) /* && leftObject < leftBorder*/ && !isHorizontalChanged) {
                 isHorizontalChanged = true;
             }
         }
 
         // check top collision
-        if (isHorizontalAlignment && gameObject->verticalVelocity < 0) {
-            if (topObject >= bottomBorder && newTopObject < bottomBorder && bottomObject > bottomBorder && !isVerticalChanged) {
+        if (isHorizontalAlignment && (gameObject->verticalVelocity < 0)) {
+            if ((topObject >= bottomBorder) && (newTopObject < bottomBorder) /* && bottomObject > bottomBorder*/ && !isVerticalChanged) {
                 isVerticalChanged = true;
             }
         }
 
         // check bottom collision
-        if (isHorizontalAlignment && gameObject->verticalVelocity > 0) {
-            if (bottomObject <= topBorder && newbottomObject > topBorder && topObject < topBorder && !isVerticalChanged) {
+        if (isHorizontalAlignment && (gameObject->verticalVelocity > 0)) {
+            if ((bottomObject <= topBorder) && (newBottomObject > topBorder) /* && (topObject < topBorder)*/ && !isVerticalChanged) {
                 isVerticalChanged = true;
             }
         }
