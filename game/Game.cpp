@@ -1,9 +1,18 @@
 #include <Game.h>
 
 #include <GameObject.h>
+#include <GameDataProvider.h>
 
 #include <memory>
 #include <stdexcept>
+
+Game::Game() : gameDataProvider(new GameDataProvider) {
+
+}
+
+Game::~Game() {
+    delete gameDataProvider;
+}
 
 void Game::moveGameObjectUp(std::shared_ptr<GameObject> gameObject) {
     static int topBorder = 50;
@@ -173,7 +182,7 @@ void Game::updateGameObject(std::shared_ptr<GameObject> gameObject, unsigned int
 }
 
 void Game::init() {
-    std::vector<std::shared_ptr<GameObject>> gameObjects = gameDataProvider.getGameObjects();
+    std::vector<std::shared_ptr<GameObject>> gameObjects = gameDataProvider->getGameObjects();
     this->gameObjects = gameObjects;
 }
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <GameDataProvider.h>
-#include <GameObject.h>
-
 #include <memory>
 #include <vector>
+
+class GameDataProvider;
+class GameObject;
 
 constexpr size_t gameMoveUp = 1;
 constexpr size_t gameMoveDown = 2;
@@ -14,9 +14,8 @@ constexpr size_t gameMoveRight = 5;
 
 class Game {
     public:
-        Game() {
-        }
-
+        Game();
+        ~Game();
         void init();
         void update();
         void setCurrentEvent(size_t newEvent);
@@ -33,5 +32,5 @@ class Game {
     private:
         unsigned int currentEvent;
         std::vector<std::shared_ptr<GameObject>> gameObjects;
-        GameDataProvider gameDataProvider;
+        GameDataProvider* gameDataProvider;
 };
