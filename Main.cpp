@@ -1,5 +1,4 @@
 #include <Controller.h>
-
 #include <Hello.h>
 
 #include <iostream>
@@ -13,7 +12,7 @@ int main(int argc, char** argv) {
     try {
         Hello hello;
 
-        for (size_t i = 0; i < argc; ++i) {
+        for (uint32_t i = 0; i < argc; ++i) {
             std::cout << argv[i] << '\n';
         }
 

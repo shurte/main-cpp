@@ -1,5 +1,4 @@
 #include <Controller.h>
-
 #include <Hello.h>
 
 constexpr uint64_t millisecondsInHalfFrame = 1000 / 120;
