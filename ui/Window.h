@@ -10,13 +10,13 @@
 #include <memory>
 #include <vector>
 
-constexpr int8_t windowMouseDown = 1;
-constexpr int8_t windowMouseUp = 2;
-constexpr int8_t windowMoveUp = 3;
-constexpr int8_t windowMoveDown = 4;
-constexpr int8_t windowMoveRight = 5;
-constexpr int8_t windowMoveLeft = 6;
-constexpr int8_t windowExit = 128;
+constexpr uint32_t windowMouseDown = 1;
+constexpr uint32_t windowMouseUp = 2;
+constexpr uint32_t windowMoveUp = 3;
+constexpr uint32_t windowMoveDown = 4;
+constexpr uint32_t windowMoveRight = 5;
+constexpr uint32_t windowMoveLeft = 6;
+constexpr uint32_t windowExit = 128;
 
 class Window {
     public:
@@ -26,7 +26,7 @@ class Window {
         void init();
         void update();
         void setUiObjects(const UiObjectPtrVector& geometricObjects);
-        int8_t getCurrentEvent();
+        uint32_t getCurrentEvent();
 
     private:
         void updateEvent();
@@ -37,5 +37,5 @@ class Window {
     private:
         SDL_Window* window = nullptr;
         UiObjectPtrVector uiObjects;
-        int8_t currentEvent = 0;
+        uint32_t currentEvent = 0;
 };
