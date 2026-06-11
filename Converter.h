@@ -8,6 +8,6 @@
 
 class Converter {
     public:
-        UiObjectPtr getUiObject(std::shared_ptr<GameObject> gameObject) const;
+        UiObjectPtr getUiObject(std::shared_ptr<const GameObject> gameObject) const;
         UiObjectPtrVector getUiObjects(const std::vector<std::shared_ptr<GameObject>>& gameObjects) const;
 };

@@ -2,7 +2,7 @@
 
 #include <Controller.h>
 
-UiObjectPtr Converter::getUiObject(std::shared_ptr<GameObject> gameObject) const {
+UiObjectPtr Converter::getUiObject(std::shared_ptr<const GameObject> gameObject) const {
     UiObjectPtr uiObject(new UiObject);
     uiObject->setXValue(0, ( (float) gameObject->horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f);
     uiObject->setYValue(0, (( (float) WINDOW_SIZE_V - gameObject->verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f);
