@@ -182,8 +182,7 @@ void Game::updateGameObject(std::shared_ptr<GameObject> gameObject, unsigned int
 }
 
 void Game::init() {
-    std::vector<std::shared_ptr<GameObject>> gameObjects = gameDataProvider->getGameObjects();
-    this->gameObjects = gameObjects;
+    this->gameObjects = gameDataProvider->getGameObjects();
 }
 
 void Game::update() {

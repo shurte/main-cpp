@@ -2,21 +2,32 @@
 
 #include <Controller.h>
 
+constexpr uint32_t HorizontalStart = 0;
+constexpr uint32_t HorizontalEnd = WINDOW_SIZE_H;
+constexpr uint32_t HorizontalDelta = HorizontalEnd - HorizontalStart;
+
+float convertHorizontalValue(uint32_t value) {
+    uint32_t temp = value * 10000 / HorizontalDelta;
+    temp *= 2;
+    int32_t stemp = temp - 10000;
+    return 1.0f * stemp / 10000;
+}
+
 UiObjectPtr Converter::getUiObject(std::shared_ptr<const GameObject> gameObject) const {
     UiObjectPtr uiObject(new UiObject);
-    uiObject->setXValue(0, ( (float) gameObject->horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f);
+    uiObject->setXValue(0, convertHorizontalValue(gameObject->horizontalPosition));
     uiObject->setYValue(0, (( (float) WINDOW_SIZE_V - gameObject->verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f);
     uiObject->setZValue(0, 0);
 
-    uiObject->setXValue(1, (( (float) gameObject->horizontalPosition + gameObject->horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f);
+    uiObject->setXValue(1, convertHorizontalValue(gameObject->horizontalPosition + gameObject->horizontalSize));
     uiObject->setYValue(1, (( (float) WINDOW_SIZE_V - gameObject->verticalPosition) / WINDOW_SIZE_V) * 2.0f - 1.0f);
     uiObject->setZValue(1, 0);
 
-    uiObject->setXValue(2, (( (float) gameObject->horizontalPosition + gameObject->horizontalSize) / WINDOW_SIZE_H) * 2.0f - 1.0f);
+    uiObject->setXValue(2, convertHorizontalValue(gameObject->horizontalPosition + gameObject->horizontalSize));
     uiObject->setYValue(2, (( (float) WINDOW_SIZE_V - gameObject->verticalPosition - gameObject->verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f);
     uiObject->setZValue(2, 0);
 
-    uiObject->setXValue(3, ( (float) gameObject->horizontalPosition / WINDOW_SIZE_H) * 2.0f - 1.0f);
+    uiObject->setXValue(3, convertHorizontalValue(gameObject->horizontalPosition));
     uiObject->setYValue(3, (( (float) WINDOW_SIZE_V - gameObject->verticalPosition - gameObject->verticalSize) / WINDOW_SIZE_V) * 2.0f - 1.0f);
     uiObject->setZValue(3, 0);
 
