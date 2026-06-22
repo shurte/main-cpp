@@ -2,12 +2,12 @@
 
 #include <Controller.h>
 
-constexpr uint32_t HorizontalStart = 0;
-constexpr uint32_t HorizontalEnd = WINDOW_SIZE_H;
-constexpr uint32_t HorizontalDelta = HorizontalEnd - HorizontalStart;
+constexpr unsigned HorizontalStart = 0;
+constexpr unsigned HorizontalEnd = WINDOW_SIZE_H;
+constexpr unsigned HorizontalDelta = HorizontalEnd - HorizontalStart;
 
-float convertHorizontalValue(uint32_t value) {
-    uint32_t temp = value * 10000 / HorizontalDelta;
+float convertHorizontalValue(unsigned value) {
+    unsigned temp = value * 10000 / HorizontalDelta;
     temp *= 2;
     int32_t stemp = temp - 10000;
     return 1.0f * stemp / 10000;

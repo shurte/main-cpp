@@ -19,7 +19,7 @@ void Controller::runLoop() {
     while (isRunning) {
         updateWindow();
 
-        uint32_t event = window.getCurrentEvent();
+        unsigned int event = window.getCurrentEvent();
 
         if (event == windowExit) {
             isRunning = false;

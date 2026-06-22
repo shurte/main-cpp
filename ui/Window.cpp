@@ -48,7 +48,7 @@ void Window::setUiObjects(const UiObjectPtrVector& newUiObjects) {
     }
 }
 
-uint32_t Window::getCurrentEvent() {
+unsigned Window::getCurrentEvent() {
     return currentEvent;
 }
 

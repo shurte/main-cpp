@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
     try {
         Hello hello;
 
-        for (uint32_t i = 0; i < argc; ++i) {
+        for (unsigned i = 0; i < argc; ++i) {
             std::cout << argv[i] << '\n';
         }
 
